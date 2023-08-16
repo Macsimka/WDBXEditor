@@ -494,6 +494,18 @@
     <Field Name="VariationIndex" Type="int" />
     <Field Name="ColorIndex" Type="int" />
   </Table>
+  <Table Name="CharStartOutfit" Build="18414">
+    <Field Name="ID" Type="int" IsIndex="true" />
+    <Field Name="RaceID" Type="byte" />
+    <Field Name="ClassID" Type="byte" />
+    <Field Name="SexID" Type="byte" />
+    <Field Name="OutfitID" Type="byte" />
+    <Field Name="ItemID" Type="int" ArraySize="24" />
+    <Field Name="ItemDisplayId" Type="int" ArraySize="24" />
+    <Field Name="ItemInventorySlot" Type="int" ArraySize="24" />
+    <Field Name="PetDisplayID" Type="int" />
+    <Field Name="PetFamilyID" Type="int" />
+  </Table>
   <Table Name="CharTitles" Build="18414">
     <Field Name="ID" Type="int" IsIndex="true" />
     <Field Name="Field01" Type="int" />
@@ -696,26 +708,23 @@
   </Table>
   <Table Name="CreatureDisplayInfo" Build="18414">
     <Field Name="ID" Type="int" IsIndex="true" />
-    <Field Name="Field01" Type="int" />
-    <Field Name="Field02" Type="int" />
-    <Field Name="Field03" Type="int" />
-    <Field Name="Field04" Type="float" />
-    <Field Name="Field05" Type="int" />
-    <Field Name="Field06" Type="string" />
-    <Field Name="Field07" Type="string" />
-    <Field Name="Field08" Type="string" />
-    <Field Name="Field09" Type="string" />
-    <Field Name="Field10" Type="int" />
-    <Field Name="Field11" Type="int" />
-    <Field Name="Field12" Type="int" />
-    <Field Name="Field13" Type="int" />
-    <Field Name="Field14" Type="int" />
-    <Field Name="Field15" Type="int" />
-    <Field Name="Field16" Type="int" />
-    <Field Name="Field17" Type="int" />
-    <Field Name="Field18" Type="int" />
-    <Field Name="Field19" Type="int" />
-    <Field Name="Field20" Type="int" />
+    <Field Name="ModelID" Type="int" />
+    <Field Name="SoundID" Type="int" />
+    <Field Name="ExtendedDisplayInfoID" Type="int" />
+    <Field Name="CreatureModelScale" Type="float" />
+    <Field Name="CreatureModelAlpha" Type="int" />
+    <Field Name="TextureVariation" Type="string" ArraySize="3" />
+    <Field Name="PortraitTextureName" Type="string" />
+    <Field Name="SizeClass" Type="int" />
+    <Field Name="BloodID" Type="int" />
+    <Field Name="NPCSoundID" Type="int" />
+    <Field Name="ParticleColorID" Type="int" />
+    <Field Name="CreatureGeosetData" Type="int" />
+    <Field Name="ObjectEffectPackageID" Type="int" />
+    <Field Name="AnimReplacementSetID" Type="int" />
+    <Field Name="Flags" Type="int" />
+    <Field Name="Gender" Type="int" />
+    <Field Name="StateSpellVisualKitID" Type="int" />
   </Table>
   <Table Name="CreatureDisplayInfoExtra" Build="18414">
     <Field Name="ID" Type="int" IsIndex="true" />
@@ -790,7 +799,7 @@
   <Table Name="CreatureModelData" Build="18414">
     <Field Name="ID" Type="int" IsIndex="true" />
     <Field Name="Flags" Type="int" />
-    <Field Name="FileDataID" Type="int" />
+    <Field Name="ModelPath" Type="string" />
     <Field Name="SizeClass" Type="int" />
     <Field Name="ModelScale" Type="float" />
     <Field Name="BloodID" Type="int" />
@@ -1356,7 +1365,7 @@
   </Table>
   <Table Name="GtChanceToMeleeCritBase" Build="18414">
     <Field Name="ID" Type="int" IsIndex="true" />
-    <Field Name="Field01" Type="int" />
+    <Field Name="Field01" Type="float" />
   </Table>
   <Table Name="GtChanceToSpellCrit" Build="18414">
     <Field Name="ID" Type="int" IsIndex="true" />
@@ -1364,7 +1373,7 @@
   </Table>
   <Table Name="GtChanceToSpellCritBase" Build="18414">
     <Field Name="ID" Type="int" IsIndex="true" />
-    <Field Name="Field01" Type="int" />
+    <Field Name="Field01" Type="float" />
   </Table>
   <Table Name="GtCombatRatings" Build="18414">
     <Field Name="ID" Type="int" IsIndex="true" />
@@ -1388,7 +1397,7 @@
   </Table>
   <Table Name="GtOCTClassCombatRatingScalar" Build="18414">
     <Field Name="ID" Type="int" IsIndex="true" />
-    <Field Name="Field01" Type="int" />
+    <Field Name="Field01" Type="float" />
   </Table>
   <Table Name="GtOCTHpPerStamina" Build="18414">
     <Field Name="ID" Type="int" IsIndex="true" />
@@ -2189,6 +2198,84 @@
     <Field Name="Field02" Type="string" />
     <Field Name="Field03" Type="int" />
   </Table>
+  <Table Name="PlayerCondition" Build="18414">
+    <Field Name="ID" Type="int" IsIndex="true" />
+    <Field Name="Flags" Type="int" />
+    <Field Name="MinLevel" Type="int" />
+    <Field Name="MaxLevel" Type="int" />
+    <Field Name="RaceMask" Type="int" />
+    <Field Name="ClassMask" Type="int" />
+    <Field Name="Gender" Type="int" />
+    <Field Name="NativeGender" Type="int" />
+    <Field Name="SkillID" Type="int" ArraySize="4" />
+    <Field Name="MinSkill" Type="int" ArraySize="4" />
+    <Field Name="MaxSkill" Type="int" ArraySize="4" />
+    <Field Name="SkillLogic" Type="int" />
+    <Field Name="LanguageID" Type="int" />
+    <Field Name="MinLanguage" Type="int" />
+    <Field Name="MaxLanguage" Type="int" />
+    <Field Name="MinFactionID" Type="int" ArraySize="3" />
+    <Field Name="MaxFactionID" Type="int" />
+    <Field Name="MinReputation" Type="int" ArraySize="3" />
+    <Field Name="MaxReputation" Type="int" />
+    <Field Name="ReputationLogic" Type="int" />
+    <Field Name="MinPVPRank" Type="int" />
+    <Field Name="MaxPVPRank" Type="int" />
+    <Field Name="PvpMedal" Type="int" />
+    <Field Name="PrevQuestLogic" Type="int" />
+    <Field Name="PrevQuestID" Type="int" ArraySize="4" />
+    <Field Name="CurrQuestLogic" Type="int" />
+    <Field Name="CurrQuestID" Type="int" ArraySize="4" />
+    <Field Name="CurrentCompletedQuestLogic" Type="int" />
+    <Field Name="CurrentCompletedQuestID" Type="int" ArraySize="4" />
+    <Field Name="SpellLogic" Type="int" />
+    <Field Name="SpellID" Type="int" ArraySize="4" />
+    <Field Name="ItemLogic" Type="int" />
+    <Field Name="ItemID" Type="int" ArraySize="4" />
+    <Field Name="ItemCount" Type="int" ArraySize="4" />
+    <Field Name="ItemFlags" Type="int" />
+    <Field Name="Explored" Type="int" ArraySize="2" />
+    <Field Name="Time" Type="int" ArraySize="2" />
+    <Field Name="AuraSpellLogic" Type="int" />
+    <Field Name="AuraSpellID" Type="int" ArraySize="4" />
+    <Field Name="WorldStateExpressionID" Type="int" />
+    <Field Name="WeatherID" Type="int" />
+    <Field Name="PartyStatus" Type="int" />
+    <Field Name="LifetimeMaxPVPRank" Type="int" />
+    <Field Name="AchievementLogic" Type="int" />
+    <Field Name="Achievement" Type="int" ArraySize="4" />
+    <Field Name="LfgLogic" Type="int" />
+    <Field Name="LfgStatus" Type="int" ArraySize="4" />
+    <Field Name="LfgCompare" Type="int" ArraySize="4" />
+    <Field Name="LfgValue" Type="int" ArraySize="4" />
+    <Field Name="AreaLogic" Type="int" />
+    <Field Name="AreaID" Type="int" ArraySize="4" />
+    <Field Name="CurrencyLogic" Type="int" />
+    <Field Name="CurrencyID" Type="int" ArraySize="4" />
+    <Field Name="CurrencyCount" Type="int" ArraySize="4" />
+    <Field Name="QuestKillID" Type="int" />
+    <Field Name="QuestKillLogic" Type="int" />
+    <Field Name="QuestKillMonster" Type="int" ArraySize="4" />
+    <Field Name="MinExpansionLevel" Type="int" />
+    <Field Name="MaxExpansionLevel" Type="int" />
+    <Field Name="MinExpansionTier" Type="int" />
+    <Field Name="MaxExpansionTier" Type="int" />
+    <Field Name="MinGuildLevel" Type="int" />
+    <Field Name="MaxGuildLevel" Type="int" />
+    <Field Name="PhaseUseFlags" Type="int" />
+    <Field Name="PhaseID" Type="int" />
+    <Field Name="PhaseGroupID" Type="int" />
+    <Field Name="MinAvgItemLevel" Type="int" />
+    <Field Name="MaxAvgItemLevel" Type="int" />
+    <Field Name="MinAvgEquippedItemLevel" Type="int" />
+    <Field Name="MaxAvgEquippedItemLevel" Type="int" />
+    <Field Name="ChrSpecializationIndex" Type="int" />
+    <Field Name="ChrSpecializationRole" Type="int" />
+    <Field Name="Failure_Description_Lang" Type="string" />
+    <Field Name="PowerType" Type="int" />
+    <Field Name="PowerTypeComp" Type="int" />
+    <Field Name="PowerTypeValue" Type="int" />
+  </Table>
   <Table Name="QuestCache" Build="18414">
     <Field Name="ID" Type="int" IsIndex="true" />
     <Field Name="Field01" Type="int" />
@@ -2535,6 +2622,14 @@
     <Field Name="EffectIndex" Type="uint" />
     <Field Name="Field29" Type="uint" />
   </Table>
+  <Table Name="SpellEffectScaling" Build="18414">
+    <Field Name="ID" Type="int" IsIndex="true" />
+    <Field Name="Coefficient" Type="float" />
+    <Field Name="Variance" Type="float" />
+    <Field Name="ResourceCoefficient" Type="float" />
+    <Field Name="GroupSizeMultiplier" Type="float" />
+    <Field Name="SpellEffectID" Type="int" />
+  </Table>
   <Table Name="SpellEquippedItems" Build="18414">
     <Field Name="ID" Type="int" IsIndex="true" />
     <Field Name="Field01" Type="int" />
@@ -2622,18 +2717,25 @@
   </Table>
   <Table Name="SpellPower" Build="18414">
     <Field Name="ID" Type="int" IsIndex="true" />
-    <Field Name="Field01" Type="int" />
-    <Field Name="Field02" Type="int" />
-    <Field Name="Field03" Type="int" />
-    <Field Name="Field04" Type="int" />
-    <Field Name="Field05" Type="int" />
-    <Field Name="Field06" Type="int" />
-    <Field Name="Field07" Type="int" />
-    <Field Name="Field08" Type="int" />
-    <Field Name="Field09" Type="float" />
-    <Field Name="Field10" Type="float" />
-    <Field Name="Field11" Type="int" />
-    <Field Name="Field12" Type="float" />
+    <Field Name="spellID" Type="int" />
+    <Field Name="difficultyID" Type="int" />
+    <Field Name="powerType" Type="int" />
+    <Field Name="powerCost" Type="int" />
+    <Field Name="powerCostPerLevel" Type="int" />
+    <Field Name="costPerSec" Type="int" />
+    <Field Name="PowerDisplayId1" Type="int" />
+    <Field Name="PowerDisplayId2" Type="int" />
+    <Field Name="powerCostPercent" Type="float" />
+    <Field Name="CostPerSecondPercentage" Type="float" />
+    <Field Name="RequiredAura" Type="int" />
+    <Field Name="CostMaxPercentage" Type="float" />
+  </Table>
+  <Table Name="SpellReagents" Build="18414">
+    <Field Name="ID" Type="int" IsIndex="true" />
+    <Field Name="Reagent" Type="int" ArraySize="8" />
+    <Field Name="ReagentCount" Type="int" ArraySize="8" />
+    <Field Name="CurrencyID" Type="uint" />
+    <Field Name="CurrencyCount" Type="uint" />
   </Table>
   <Table Name="SpellRuneCost" Build="18414">
     <Field Name="ID" Type="int" IsIndex="true" />
@@ -2745,6 +2847,30 @@
     <Field Name="Field07" Type="float" />
     <Field Name="Field08" Type="int" />
   </Table>
+  <Table Name="Talent" Build="18414">
+    <Field Name="ID" Type="int" IsIndex="true" />
+    <Field Name="SpecID" Type="int" />
+    <Field Name="TierID" Type="int" />
+    <Field Name="ColumnIndex" Type="int" />
+    <Field Name="SpellID" Type="int" />
+    <Field Name="Flags" Type="int" />
+    <Field Name="CategoryMask" Type="int" ArraySize="2" />
+    <Field Name="ClassID" Type="int" />
+    <Field Name="OverridesSpellID" Type="int" />
+    <Field Name="Description_Lang" Type="string" />
+  </Table>
+  <Table Name="TaxiNodes" Build="18414">
+    <Field Name="ID" Type="int" IsIndex="true" />
+    <Field Name="MapID" Type="int" />
+    <Field Name="X" Type="float" />
+    <Field Name="Y" Type="float" />
+    <Field Name="Z" Type="float" />
+    <Field Name="Name" Type="string" />
+    <Field Name="MountCreatureID" Type="int" ArraySize="2" />
+    <Field Name="ConditionID" Type="int" />
+    <Field Name="Flags" Type="int" />
+    <Field Name="MapOffset" Type="int" ArraySize="2" />
+  </Table>
   <Table Name="UiTextureAtlasMember" Build="18414">
     <Field Name="ID" Type="int" IsIndex="true" />
     <Field Name="Field01" Type="string" />
@@ -2781,10 +2907,10 @@
     <Field Name="MissileTargetArcSpeed" Type="float" />
     <Field Name="MissileTargetArcRepeat" Type="float" />
     <Field Name="MissileTargetArcWidth" Type="float" />
-    <Field Name="MissileTargetImpactRadius" Type="float" ArraySize="2"/>
+    <Field Name="MissileTargetImpactRadius" Type="float" ArraySize="2" />
     <Field Name="MissileTargetArcTexture" Type="string" />
     <Field Name="MissileTargetImpactTexture" Type="string" />
-    <Field Name="MissileTargetImpactModel" Type="string" ArraySize="2"/>
+    <Field Name="MissileTargetImpactModel" Type="string" ArraySize="2" />
     <Field Name="CameraYawOffset" Type="float" />
     <Field Name="UILocomotionType" Type="uint" />
     <Field Name="MissileTargetImpactTexRadius" Type="float" />
@@ -2914,20 +3040,15 @@
   </Table>
   <Table Name="WorldMapTransforms" Build="18414">
     <Field Name="ID" Type="int" IsIndex="true" />
-    <Field Name="Field01" Type="int" />
-    <Field Name="Field02" Type="float" />
-    <Field Name="Field03" Type="float" />
-    <Field Name="Field04" Type="float" />
-    <Field Name="Field05" Type="float" />
-    <Field Name="Field06" Type="int" />
-    <Field Name="Field07" Type="float" />
-    <Field Name="Field08" Type="float" />
-    <Field Name="Field09" Type="int" />
-    <Field Name="Field10" Type="int" />
-    <Field Name="Field11" Type="int" />
-    <Field Name="Field12" Type="float" />
-    <Field Name="Field13" Type="int" />
-    <Field Name="Field14" Type="int" />
+    <Field Name="MapID" Type="int" />
+    <Field Name="RegionMin" Type="float" ArraySize="3" />
+    <Field Name="RegionMax" Type="float" ArraySize="3" />
+    <Field Name="NewMapID" Type="int" />
+    <Field Name="RegionOffset" Type="float" ArraySize="2" />
+    <Field Name="NewDungeonMapID" Type="int" />
+    <Field Name="Flags" Type="int" />
+    <Field Name="NewAreaID" Type="int" />
+    <Field Name="RegionSize" Type="float" />
   </Table>
   <Table Name="WorldSafelocs" Build="18414">
     <Field Name="ID" Type="int" IsIndex="true" />

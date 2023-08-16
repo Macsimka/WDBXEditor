@@ -134,8 +134,8 @@ namespace WDBXEditor.Common
             {
                 if (cols[i].DataType == typeof(string)) //Escape formatting
                 {
-                    string val = row[i].ToString().Replace(@"'", @"\'").Replace(@"""", @"\""").Replace(@"\", @"\\");
-                    sb.Append("\"" + val + "\",");
+                    string val = row[i].ToString().Replace("\\", @"\\").Replace("'", "\\\'");
+                    sb.Append("\'" + val + "\',");
                 }
                 else if (cols[i].DataType == typeof(float))
                 {
