@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WDBXEditor.Storage;
 using static WDBXEditor.Common.Constants;
-using WDBXEditor.Common;
-using System.Data;
-using System.Runtime.Serialization.Formatters.Binary;
 
 namespace WDBXEditor.Reader.FileTypes
 {
@@ -60,7 +56,7 @@ namespace WDBXEditor.Reader.FileTypes
 
             if (HasIndexTable)
             {
-				FieldCount++;
+                FieldCount++;
                 FieldStructure.Insert(0, new FieldStructureEntry(0, 0));
 
                 if (FieldCount > 1)
@@ -104,8 +100,8 @@ namespace WDBXEditor.Reader.FileTypes
                 }
             }
 
-			if(HasRelationshipData)
-				dbReader.BaseStream.Position += (MaxId - MinId + 1) * 4;
+            if (HasRelationshipData)
+                dbReader.BaseStream.Position += (MaxId - MinId + 1) * 4;
 
             //Index table
             if (HasIndexTable)
@@ -194,8 +190,8 @@ namespace WDBXEditor.Reader.FileTypes
 
             public OffsetDuplicate(int hidden, int visible)
             {
-                this.HiddenIndex = hidden;
-                this.VisibleIndex = visible;
+                HiddenIndex = hidden;
+                VisibleIndex = visible;
             }
         }
         #endregion

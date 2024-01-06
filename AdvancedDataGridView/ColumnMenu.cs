@@ -2,9 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace ADGV
@@ -80,9 +78,9 @@ namespace ADGV
             _textStrings.Add("NODESELECTALL", "(Select All)");
             _textStrings.Add("NODESELECTEMPTY", "(Blanks)");
             _textStrings.Add("HIDECOLUMN", "Hide");
-            
+
             InitializeComponent();
-            
+
             DataType = dataType;
         }
 
@@ -136,12 +134,12 @@ namespace ADGV
             _activated = true;
         }
 
-        private void MenuStrip_Closed(Object sender, EventArgs e)
+        private void MenuStrip_Closed(object sender, EventArgs e)
         {
             ResizeClean();
         }
 
-        private void MenuStrip_LostFocus(Object sender, EventArgs e)
+        private void MenuStrip_LostFocus(object sender, EventArgs e)
         {
             if (!ContainsFocus)
                 Close();
@@ -156,15 +154,13 @@ namespace ADGV
 
             using (Bitmap img = new Bitmap(16, 16))
             {
-                using (Graphics g = Graphics.FromImage(img))
-                {
-                    CheckBoxRenderer.DrawCheckBox(g, new Point(0, 1), System.Windows.Forms.VisualStyles.CheckBoxState.UncheckedNormal);
-                    unCheckImg = (Bitmap)img.Clone();
-                    CheckBoxRenderer.DrawCheckBox(g, new Point(0, 1), System.Windows.Forms.VisualStyles.CheckBoxState.CheckedNormal);
-                    checkImg = (Bitmap)img.Clone();
-                    CheckBoxRenderer.DrawCheckBox(g, new Point(0, 1), System.Windows.Forms.VisualStyles.CheckBoxState.MixedNormal);
-                    mixedImg = (Bitmap)img.Clone();
-                }
+                using Graphics g = Graphics.FromImage(img);
+                CheckBoxRenderer.DrawCheckBox(g, new Point(0, 1), System.Windows.Forms.VisualStyles.CheckBoxState.UncheckedNormal);
+                unCheckImg = (Bitmap)img.Clone();
+                CheckBoxRenderer.DrawCheckBox(g, new Point(0, 1), System.Windows.Forms.VisualStyles.CheckBoxState.CheckedNormal);
+                checkImg = (Bitmap)img.Clone();
+                CheckBoxRenderer.DrawCheckBox(g, new Point(0, 1), System.Windows.Forms.VisualStyles.CheckBoxState.MixedNormal);
+                mixedImg = (Bitmap)img.Clone();
             }
 
             images.Images.Add("uncheck", unCheckImg);
@@ -182,10 +178,10 @@ namespace ADGV
             if (!IsSortEnabled)
                 enabled = false;
 
-            this.cancelSortMenuItem.Enabled = enabled;
+            cancelSortMenuItem.Enabled = enabled;
 
-            this.sortASCMenuItem.Enabled = enabled;
-            this.sortDESCMenuItem.Enabled = enabled;
+            sortASCMenuItem.Enabled = enabled;
+            sortDESCMenuItem.Enabled = enabled;
         }
 
         public void SetFilterEnabled(bool enabled)
@@ -193,7 +189,7 @@ namespace ADGV
             if (!IsFilterEnabled)
                 enabled = false;
 
-            this.cancelFilterMenuItem.Enabled = enabled;
+            cancelFilterMenuItem.Enabled = enabled;
             if (enabled)
                 customFilterLastFiltersListMenuItem.Enabled = DataType != typeof(bool);
             else
@@ -201,7 +197,7 @@ namespace ADGV
         }
 
         #endregion
-        
+
         public void SetLoadedMode(bool enabled)
         {
             cancelFilterMenuItem.Enabled = enabled;
@@ -254,7 +250,7 @@ namespace ADGV
         {
             get
             {
-                return _sortString == null ? "" : _sortString;
+                return _sortString ?? "";
             }
             private set
             {
@@ -279,7 +275,7 @@ namespace ADGV
         {
             get
             {
-                return _filterString == null ? "" : _filterString;
+                return _filterString ?? "";
             }
 
             private set

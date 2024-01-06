@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WDBXEditor.Storage;
 
 namespace WDBXEditor.Reader.FileTypes
 {
-    class WCH7 : WCH5
+    internal class WCH7 : WCH5
     {
         public int[] WCH7Table { get; private set; } = new int[0];
 
@@ -23,7 +20,7 @@ namespace WDBXEditor.Reader.FileTypes
         {
             StringTableOffset = 0x14;
             HeaderSize = 0x34;
-            this.FileName = filename;
+            FileName = filename;
         }
 
         public override byte[] ReadData(BinaryReader dbReader, long pos)

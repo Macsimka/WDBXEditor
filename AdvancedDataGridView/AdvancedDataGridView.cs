@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data;
-using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -18,7 +16,7 @@ namespace ADGV
         public event EventHandler SortStringChanged;
         public event EventHandler FilterStringChanged;
 
-        public ContextMenu HeaderContext { get; set; }
+        public ContextMenuStrip HeaderContext { get; set; }
         public bool FilterAndSortEnabled { get; set; }
         public string FilterString
         {
@@ -63,8 +61,8 @@ namespace ADGV
         private object[] _copydata;
         private DataColumn primarykey => PrimaryKey;
 
-		private Dictionary<int, MinMax> BitCounts;
-		
+        private Dictionary<int, MinMax> BitCounts;
+
         public AdvancedDataGridView()
         {
             DoubleBuffered = true;
@@ -127,7 +125,7 @@ namespace ADGV
             }
             base.OnColumnRemoved(e);
         }
-        
+
         #endregion
 
 
@@ -165,56 +163,56 @@ namespace ADGV
             base.OnCellValueChanged(e);
         }
 
-		//protected override void OnCellValidating(DataGridViewCellValidatingEventArgs e)
-		//{
-		//	if(BitCounts.ContainsKey(e.ColumnIndex))
-		//	{
-		//		var bitcount = BitCounts[e.ColumnIndex];
-		//		if(bitcount.IsSingle &&  float.TryParse(e.FormattedValue.ToString(), out float fVal))
-		//		{
-		//			e.Cancel = fVal < (float)bitcount.MinVal || fVal > (float)bitcount.MaxVal;
-		//		}
-		//		if(bitcount.Signed && long.TryParse(e.FormattedValue.ToString(), out long val))
-		//		{
-		//			e.Cancel = val < (long)bitcount.MinVal || val > (long)bitcount.MaxVal;
-		//		}
-		//		else if(ulong.TryParse(e.FormattedValue.ToString(), out ulong val2))
-		//		{
-		//			e.Cancel = val2 > (ulong)bitcount.MaxVal;
-		//		}
-		//	}
+        //protected override void OnCellValidating(DataGridViewCellValidatingEventArgs e)
+        //{
+        //	if(BitCounts.ContainsKey(e.ColumnIndex))
+        //	{
+        //		var bitcount = BitCounts[e.ColumnIndex];
+        //		if(bitcount.IsSingle &&  float.TryParse(e.FormattedValue.ToString(), out float fVal))
+        //		{
+        //			e.Cancel = fVal < (float)bitcount.MinVal || fVal > (float)bitcount.MaxVal;
+        //		}
+        //		if(bitcount.Signed && long.TryParse(e.FormattedValue.ToString(), out long val))
+        //		{
+        //			e.Cancel = val < (long)bitcount.MinVal || val > (long)bitcount.MaxVal;
+        //		}
+        //		else if(ulong.TryParse(e.FormattedValue.ToString(), out ulong val2))
+        //		{
+        //			e.Cancel = val2 > (ulong)bitcount.MaxVal;
+        //		}
+        //	}
 
-		//	base.OnCellValidating(e);
-		//}
+        //	base.OnCellValidating(e);
+        //}
 
-		public bool ValidValue(int index, object value)
-		{
-			if (BitCounts.ContainsKey(index))
-			{
-				var bitcount = BitCounts[index];
-				if (bitcount.IsSingle && float.TryParse(value.ToString(), out float fVal))
-				{
-					return fVal >= (float)bitcount.MinVal && fVal <= (float)bitcount.MaxVal;
-				}
-				if (bitcount.Signed && long.TryParse(value.ToString(), out long val))
-				{
-					return (val >= (long)bitcount.MinVal && val <= (long)bitcount.MaxVal);
-				}
-				else if (ulong.TryParse(value.ToString(), out ulong val2))
-				{
-					return val2 <= (ulong)bitcount.MaxVal;
-				}
-			}
+        public bool ValidValue(int index, object value)
+        {
+            if (BitCounts.ContainsKey(index))
+            {
+                var bitcount = BitCounts[index];
+                if (bitcount.IsSingle && float.TryParse(value.ToString(), out float fVal))
+                {
+                    return fVal >= (float)bitcount.MinVal && fVal <= (float)bitcount.MaxVal;
+                }
+                if (bitcount.Signed && long.TryParse(value.ToString(), out long val))
+                {
+                    return (val >= (long)bitcount.MinVal && val <= (long)bitcount.MaxVal);
+                }
+                else if (ulong.TryParse(value.ToString(), out ulong val2))
+                {
+                    return val2 <= (ulong)bitcount.MaxVal;
+                }
+            }
 
-			return true;
-		}
+            return true;
+        }
 
-		#endregion
+        #endregion
 
 
-		#region Filter Methods
+        #region Filter Methods
 
-		private string BuildFilterString()
+        private string BuildFilterString()
         {
             StringBuilder sb = new StringBuilder("");
             string appx = "";
@@ -339,7 +337,7 @@ namespace ADGV
             else
                 e.Column.DefaultCellStyle.Tag = $"X";
 
-            this.Refresh();
+            Refresh();
         }
 
         #endregion
@@ -350,14 +348,14 @@ namespace ADGV
         {
             if (e != null && e.Value != null)
             {
-                if ((this.Columns[e.ColumnIndex].DefaultCellStyle.Tag?.ToString().IndexOf('X') ?? -1) == 0)
+                if ((Columns[e.ColumnIndex].DefaultCellStyle.Tag?.ToString().IndexOf('X') ?? -1) == 0)
                 {
                     string value = e.Value.ToString();
                     if (value.StartsWith("0x"))
                         value = value.Substring(2);
 
-                    long l = 0; ulong u = 0;
-                    if (long.TryParse(value, NumberStyles.HexNumber, null, out l))
+                    ulong u = 0;
+                    if (long.TryParse(value, NumberStyles.HexNumber, null, out long l))
                     {
                         e.Value = Convert.ChangeType(l, e.DesiredType);
                         e.ParsingApplied = true;
@@ -370,21 +368,20 @@ namespace ADGV
                 }
             }
             else
-			{
-				base.OnCellParsing(e);
-			}
+            {
+                base.OnCellParsing(e);
+            }
         }
 
         protected override void OnCellFormatting(DataGridViewCellFormattingEventArgs e)
         {
-            string tag = this.Columns[e.ColumnIndex].DefaultCellStyle.Tag?.ToString() ?? "";
+            string tag = Columns[e.ColumnIndex].DefaultCellStyle.Tag?.ToString() ?? "";
 
             if (e != null && tag.IndexOf('X') == 0)
             {
                 if (e.Value != null)
                 {
-                    long value = 0;
-                    if (long.TryParse(e.Value.ToString(), out value))
+                    if (long.TryParse(e.Value.ToString(), out long value))
                     {
                         e.Value = "0x" + value.ToString(tag);
                         e.FormattingApplied = true;
@@ -402,7 +399,7 @@ namespace ADGV
         {
             if (SelectedRows.Count > 0)
                 _copydata = ((DataRowView)CurrentRow.DataBoundItem).Row.ItemArray;
-            else if(SelectedCells.Count > 0)
+            else if (SelectedCells.Count > 0)
                 _copydata = ((DataRowView)CurrentCell.OwningRow.DataBoundItem).Row.ItemArray;
         }
 
@@ -417,7 +414,7 @@ namespace ADGV
 
         public void ClearCopyData()
         {
-			Array.Resize(ref _copydata, 0);
+            Array.Resize(ref _copydata, 0);
         }
         #endregion
 
@@ -433,10 +430,10 @@ namespace ADGV
             Task.Run(() => Init());
             base.OnDataBindingComplete(e);
 
-			if ((DataSource as BindingSource)?.DataSource as DataTable != null)
-				BuildMinMaxArray();
+            if ((DataSource as BindingSource)?.DataSource as DataTable != null)
+                BuildMinMaxArray();
 
-		}
+        }
 
         protected override void OnDataError(bool displayErrorDialogIfNoHandler, DataGridViewDataErrorEventArgs e)
         {
@@ -446,34 +443,34 @@ namespace ADGV
 
 
 
-		private void BuildMinMaxArray()
-		{
-			BitCounts = new Dictionary<int, MinMax>();
+        private void BuildMinMaxArray()
+        {
+            BitCounts = new Dictionary<int, MinMax>();
 
-			var source = ((DataTable)((BindingSource)DataSource).DataSource);
-			foreach(DataColumn col in source.Columns)
-			{
-				if(col.ExtendedProperties.ContainsKey("MaxValue"))
-				{
-					MinMax minmax = new MinMax()
-					{
-						Signed = col.ExtendedProperties.ContainsKey("MinValue"),
-						MaxVal = col.ExtendedProperties["MaxValue"],
-						MinVal = col.ExtendedProperties.Contains("MinValue") ? col.ExtendedProperties["MinValue"] : 0,
-						IsSingle = col.DataType == typeof(float)
-					};
+            var source = ((DataTable)((BindingSource)DataSource).DataSource);
+            foreach (DataColumn col in source.Columns)
+            {
+                if (col.ExtendedProperties.ContainsKey("MaxValue"))
+                {
+                    MinMax minmax = new MinMax()
+                    {
+                        Signed = col.ExtendedProperties.ContainsKey("MinValue"),
+                        MaxVal = col.ExtendedProperties["MaxValue"],
+                        MinVal = col.ExtendedProperties.Contains("MinValue") ? col.ExtendedProperties["MinValue"] : 0,
+                        IsSingle = col.DataType == typeof(float)
+                    };
 
-					BitCounts.Add(source.Columns.IndexOf(col), minmax);
-				}
-			}
-		}
+                    BitCounts.Add(source.Columns.IndexOf(col), minmax);
+                }
+            }
+        }
 
-		internal class MinMax
-		{
-			public object MinVal;
-			public object MaxVal;
-			public bool Signed;
-			public bool IsSingle;
-		}
+        internal class MinMax
+        {
+            public object MinVal;
+            public object MaxVal;
+            public bool Signed;
+            public bool IsSingle;
+        }
     }
 }

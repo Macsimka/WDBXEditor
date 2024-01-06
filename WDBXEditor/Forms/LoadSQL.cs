@@ -1,15 +1,8 @@
-﻿using WDBXEditor.Storage;
-using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WDBXEditor.Storage;
 using static WDBXEditor.Common.Constants;
 
 namespace WDBXEditor
@@ -55,22 +48,18 @@ namespace WDBXEditor
 
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(ConnectionString))
-                {
-                    connection.Open();
-                    MySqlCommand command = new MySqlCommand("SHOW DATABASES;", connection);
-                    using (var rdr = command.ExecuteReader())
-                    {
-                        ddlDatabases.Items.Add("");
+                using MySqlConnection connection = new MySqlConnection(ConnectionString);
+                connection.Open();
+                MySqlCommand command = new MySqlCommand("SHOW DATABASES;", connection);
+                using var rdr = command.ExecuteReader();
+                ddlDatabases.Items.Add("");
 
-                        while (rdr.Read())
-                            ddlDatabases.Items.Add(rdr[0].ToString());
+                while (rdr.Read())
+                    ddlDatabases.Items.Add(rdr[0].ToString());
 
-                        testedconnection = true;
-                        ddlDatabases.Enabled = true;
-                        SaveSettings();
-                    }
-                }
+                testedconnection = true;
+                ddlDatabases.Enabled = true;
+                SaveSettings();
             }
             catch (MySqlException ex)
             {
@@ -80,16 +69,16 @@ namespace WDBXEditor
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
+            DialogResult = DialogResult.Cancel;
+            Close();
         }
 
         private void btnLoad_Click(object sender, EventArgs e)
         {
             if (!ConnectionOnly)
             {
-                ((Main)this.Owner).ProgressBarHandle(true, "Importing SQL...");
-                this.Enabled = false;
+                ((Main)Owner).ProgressBarHandle(true, "Importing SQL...");
+                Enabled = false;
 
                 string table = ddlTable.Text;
                 string constring = ConnectionString;
@@ -116,17 +105,17 @@ namespace WDBXEditor
                     }
 
                 })
-				.ContinueWith(x =>
+                .ContinueWith(x =>
                 {
-                    this.Enabled = true;
-                    this.DialogResult = x.Result;
-                    this.Close();
+                    Enabled = true;
+                    DialogResult = x.Result;
+                    Close();
                 }, TaskScheduler.FromCurrentSynchronizationContext());
             }
             else
             {
-                this.DialogResult = DialogResult.OK;
-                this.Close();
+                DialogResult = DialogResult.OK;
+                Close();
             }
         }
         #endregion
@@ -140,17 +129,13 @@ namespace WDBXEditor
 
                 try
                 {
-                    using (MySqlConnection connection = new MySqlConnection(ConnectionString))
-                    {
-                        connection.Open();
-                        MySqlCommand command = new MySqlCommand($"USE {ddlDatabases.Text}; SHOW TABLES;", connection);
-                        using (var rdr = command.ExecuteReader())
-                        {
-                            ddlTable.Items.Add("");
-                            while (rdr.Read())
-                                ddlTable.Items.Add(rdr[0].ToString());
-                        }
-                    }
+                    using MySqlConnection connection = new MySqlConnection(ConnectionString);
+                    connection.Open();
+                    MySqlCommand command = new MySqlCommand($"USE {ddlDatabases.Text}; SHOW TABLES;", connection);
+                    using var rdr = command.ExecuteReader();
+                    ddlTable.Items.Add("");
+                    while (rdr.Read())
+                        ddlTable.Items.Add(rdr[0].ToString());
                 }
                 catch { return; }
             }

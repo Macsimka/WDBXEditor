@@ -1,7 +1,6 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 
 namespace WDBXEditor.Reader
@@ -92,7 +91,7 @@ namespace WDBXEditor.Reader
         {
             if (map == null)
                 return br.ReadInt32();
-            
+
             byte[] b = new byte[sizeof(int)];
             for (int i = 0; i < map.ByteCount; i++)
                 b[i] = br.ReadByte();

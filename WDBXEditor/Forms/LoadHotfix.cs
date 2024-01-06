@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WDBXEditor.Reader.FileTypes;
 using WDBXEditor.Storage;
@@ -50,14 +45,14 @@ namespace WDBXEditor.Forms
             var counterpart = (lbDefinitions.SelectedValue as DBEntry)?.Header;
             (Hotfix.Header as HTFX).Read(counterpart, Hotfix);
 
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            DialogResult = DialogResult.OK;
+            Close();
         }
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
+            DialogResult = DialogResult.Cancel;
+            Close();
         }
     }
 }

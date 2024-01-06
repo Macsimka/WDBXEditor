@@ -1,16 +1,13 @@
 ﻿using ADGV;
-using WDBXEditor.Common;
 using System;
-using System.ComponentModel;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using WDBXEditor.Storage;
-using System.Linq;
 using System.Collections.Generic;
-using System.Data;
+using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
+using System.Text.RegularExpressions;
+using System.Windows.Forms;
+using WDBXEditor.Common;
+using WDBXEditor.Storage;
 
 namespace WDBXEditor
 {
@@ -43,14 +40,14 @@ namespace WDBXEditor
         {
             if (replace)
             {
-                this.Text = "Replace";
+                Text = "Replace";
                 txtReplace.Enabled = true;
                 btnReplace.Enabled = true;
                 btnReplaceAll.Enabled = true;
             }
             else
             {
-                this.Text = "Find";
+                Text = "Find";
                 txtReplace.Enabled = false;
                 btnReplace.Enabled = false;
                 btnReplaceAll.Enabled = false;
@@ -66,7 +63,7 @@ namespace WDBXEditor
         /// <param name="e"></param>
         private void btnFind_Click(object sender, EventArgs e)
         {
-            if (this.Opacity != 1) return;
+            if (Opacity != 1) return;
 
             DataGridViewCell c = _data.CurrentCell;
             Point r = new Point(-1, -1);
@@ -97,7 +94,7 @@ namespace WDBXEditor
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         /// <summary>
@@ -108,7 +105,7 @@ namespace WDBXEditor
         /// <param name="e"></param>
         private void btnReplace_Click(object sender, EventArgs e)
         {
-            if (this.Opacity != 1) return;
+            if (Opacity != 1) return;
 
             DataGridViewCell c = _data.CurrentCell;
             Point r = new Point(-1, -1);
@@ -183,7 +180,7 @@ namespace WDBXEditor
                 }
                 else if (rdoFlag.Checked && GetHex(txtFind.Text, out findflag))
                 {
-                    cell = _data.SearchFlag(findflag, true, completedCells);                    
+                    cell = _data.SearchFlag(findflag, true, completedCells);
                 }
 
                 if (cell.X == -1 || cell.Y == -1)
@@ -247,13 +244,13 @@ namespace WDBXEditor
         private void FindReplace_Activated(object sender, EventArgs e)
         {
             if (_closing) return;
-            this.Opacity = 1;
+            Opacity = 1;
         }
 
         private void FindReplace_Deactivate(object sender, EventArgs e)
         {
             if (_closing) return;
-            this.Opacity = 0.75f;
+            Opacity = 0.75f;
         }
 
         private void FindReplace_FormClosing(object sender, FormClosingEventArgs e)

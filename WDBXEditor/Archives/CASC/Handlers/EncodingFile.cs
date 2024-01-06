@@ -11,9 +11,8 @@ namespace WDBXEditor.Archives.CASC.Handlers
         {
             get
             {
-                EncodingEntry entry;
 
-                if (entries.TryGetValue(md5, out entry))
+                if (entries.TryGetValue(md5, out EncodingEntry entry))
                     return entry;
 
                 return default(EncodingEntry);
@@ -22,7 +21,7 @@ namespace WDBXEditor.Archives.CASC.Handlers
 
         public byte[] Key { get; }
 
-        Dictionary<byte[], EncodingEntry> entries = new Dictionary<byte[], EncodingEntry>(new ByteArrayComparer());
+        private Dictionary<byte[], EncodingEntry> entries = new Dictionary<byte[], EncodingEntry>(new ByteArrayComparer());
 
         public EncodingFile(byte[] encodingKey)
         {
@@ -65,7 +64,7 @@ namespace WDBXEditor.Archives.CASC.Handlers
                     keys = blteEntry.ReadUInt16();
                 }
 
-                while (blteEntry.ReadByte() == 0);
+                while (blteEntry.ReadByte() == 0) ;
 
                 blteEntry.BaseStream.Position -= 1;
             }

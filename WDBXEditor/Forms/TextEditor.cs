@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using static WDBXEditor.Common.Constants;
 
@@ -15,10 +8,10 @@ namespace WDBXEditor.Forms
     {
         public string CellValue
         {
-            get { return txtText.Text.Replace(Environment.NewLine,"\n"); }
+            get { return txtText.Text.Replace(Environment.NewLine, "\n"); }
             set
             {
-                txtText.Text = value.Replace("\r\n","\n").Replace("\n",Environment.NewLine);
+                txtText.Text = value.Replace("\r\n", "\n").Replace("\n", Environment.NewLine);
                 txtText.SelectionStart = 0;
                 txtText.SelectionLength = 0;
             }
@@ -31,13 +24,13 @@ namespace WDBXEditor.Forms
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            DialogResult = DialogResult.OK;
+            Close();
         }
 
         private void btnFind_Click(object sender, EventArgs e)
@@ -48,7 +41,7 @@ namespace WDBXEditor.Forms
             int filterlen = txtFilter.Text.Length;
             int start = txtText.SelectionStart + (txtText.SelectedText.Equals(txtFilter.Text, IGNORECASE) ? filterlen : 0); //Skip currently found if applicable
 
-            StartFind:
+        StartFind:
             var indexof = txtText.Text.IndexOf(txtFilter.Text, start, IGNORECASE);
             if (indexof == -1)
             {
@@ -72,12 +65,12 @@ namespace WDBXEditor.Forms
 
         private void txtText_Enter(object sender, EventArgs e)
         {
-            this.AcceptButton = null;
+            AcceptButton = null;
         }
 
         private void txtText_Leave(object sender, EventArgs e)
         {
-            this.AcceptButton = btnSave;
+            AcceptButton = btnSave;
         }
     }
 }

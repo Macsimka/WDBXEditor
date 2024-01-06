@@ -1,15 +1,11 @@
-﻿using WDBXEditor.Storage;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static WDBXEditor.Common.Constants;
+using WDBXEditor.Storage;
 
 namespace WDBXEditor
 {
@@ -75,7 +71,7 @@ namespace WDBXEditor
         {
             txtBuild.Text = tbl.Build.ToString();
             txtFileName.Text = tbl.Name;
-            this.Text = $"Edit Definition - {tbl.Name} {tbl.BuildText}";
+            Text = $"Edit Definition - {tbl.Name} {tbl.BuildText}";
 
             dgvDefintion.RowHeadersVisible = false;
             dgvDefintion.ColumnHeadersVisible = false;
@@ -89,11 +85,10 @@ namespace WDBXEditor
         #region Button Events
         private void btnSave_Click(object sender, EventArgs e)
         {
-            int build;
             List<Field> dataSource = (List<Field>)(((BindingSource)dgvDefintion.DataSource).DataSource);
 
             //Build check
-            if (!int.TryParse(txtBuild.Text, out build) || build == 0)
+            if (!int.TryParse(txtBuild.Text, out int build) || build == 0)
             {
                 MessageBox.Show("Please enter a valid build number.");
                 return;
@@ -200,7 +195,7 @@ namespace WDBXEditor
 
         private void lbFiles_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            int index = this.lbFiles.IndexFromPoint(e.Location);
+            int index = lbFiles.IndexFromPoint(e.Location);
             if (index != ListBox.NoMatches)
             {
                 Table tbl = (Table)(((DataRowView)lbFiles.Items[index]).Row[0]);
@@ -261,12 +256,12 @@ namespace WDBXEditor
                 LineAlignment = StringAlignment.Center
             };
 
-            Size textSize = TextRenderer.MeasureText(rowIdx, this.Font);
+            Size textSize = TextRenderer.MeasureText(rowIdx, Font);
             if (grid.RowHeadersWidth < textSize.Width + 40)
                 grid.RowHeadersWidth = textSize.Width + 40;
 
             var headerBounds = new Rectangle(e.RowBounds.Left, e.RowBounds.Top, grid.RowHeadersWidth, e.RowBounds.Height);
-            e.Graphics.DrawString(rowIdx, this.Font, SystemBrushes.ControlText, headerBounds, centerFormat);
+            e.Graphics.DrawString(rowIdx, Font, SystemBrushes.ControlText, headerBounds, centerFormat);
         }
     }
 }

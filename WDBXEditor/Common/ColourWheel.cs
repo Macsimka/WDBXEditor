@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace WDBXEditor.Common
 {
-    class ColourWheel : Control
+    internal class ColourWheel : Control
     {
         private Bitmap wheelBitmap;
         private Bitmap slBitmap;
@@ -179,10 +179,8 @@ namespace WDBXEditor.Common
                     x += wheelBitmap.Width / 2;
                     y += wheelBitmap.Width / 2;
                     c = ToGray(HslToRgb(new HslColor(sHue, 255, 128))) > 128 ? Color.Black : Color.White;
-                    using (Brush b = new SolidBrush(Color.FromArgb(128, c)))
-                    {
-                        pe.Graphics.FillRectangle(b, x - 2, y - 2, 4, 4);
-                    }
+                    using Brush b = new SolidBrush(Color.FromArgb(128, c));
+                    pe.Graphics.FillRectangle(b, x - 2, y - 2, 4, 4);
                 }
             }
 
@@ -258,8 +256,7 @@ namespace WDBXEditor.Common
 
         private void PrepareWheelBitmap()
         {
-            if (wheelBitmap != null)
-                wheelBitmap.Dispose();
+            wheelBitmap?.Dispose();
 
             int width = Math.Min(ClientSize.Width, ClientSize.Height);
             Point center = new Point(width / 2, width / 2);
@@ -284,9 +281,7 @@ namespace WDBXEditor.Common
             double maxDist = width / 2 - 1;
             double factor = 128.0 / Math.PI;   // map -pi...pi to 0...255 => map 0...pi to 0...128
 
-            BitmapData bmData;
-            byte[] bytes;
-            BitmapReadBytes(wheelBitmap, out bytes, out bmData);
+            BitmapReadBytes(wheelBitmap, out byte[] bytes, out BitmapData bmData);
             for (int y = 0; y < width; y++)
             {
                 for (int x = 0; x < width; x++)
@@ -327,8 +322,7 @@ namespace WDBXEditor.Common
 
         private void PrepareSLBitmap()
         {
-            if (slBitmap != null)
-                slBitmap.Dispose();
+            slBitmap?.Dispose();
 
             int width = Math.Min(ClientSize.Width, ClientSize.Height) / 2;
             if (width < 10)
@@ -340,9 +334,7 @@ namespace WDBXEditor.Common
             // Prepare Bitmap
             slBitmap = new Bitmap(width, width);
 
-            BitmapData bmData;
-            byte[] bytes;
-            BitmapReadBytes(slBitmap, out bytes, out bmData);
+            BitmapReadBytes(slBitmap, out byte[] bytes, out BitmapData bmData);
             for (int y = 0; y < width; y++)
             {
                 for (int x = 0; x < width; x++)
@@ -456,19 +448,19 @@ namespace WDBXEditor.Common
             var s = 0.0f;
             var l = (max + min) / 2;
 
-            if(max == min)
+            if (max == min)
                 h = s = 0;
             else
             {
                 var d = max - min;
                 s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
 
-                if(max == r)
+                if (max == r)
                     h = (g - b) / d + (g < b ? 6 : 0);
-                else if(max == g)
+                else if (max == g)
                     h = (b - r) / d + 2;
                 else
-                    h = (r - g) / d + 4; 
+                    h = (r - g) / d + 4;
 
                 h /= 6;
             }

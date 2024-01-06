@@ -9,8 +9,7 @@ namespace WDBXEditor.Archives.CASC.Handlers
     public class DataFile
     {
         public readonly BinaryReader readStream;
-
-        static object readLock = new object();
+        private static object readLock = new object();
 
         public DataFile(Stream data)
         {
@@ -82,14 +81,12 @@ namespace WDBXEditor.Archives.CASC.Handlers
                     // Compressed
                     else if (formatCode == 0x5A)
                     {
-                        using (var decompressed = new MemoryStream())
-                        {
-                            using (var inflate = new DeflateStream(new MemoryStream(dataBytes, 2, dataBytes.Length - 2), CompressionMode.Decompress))
-                                inflate.CopyTo(decompressed);
+                        using var decompressed = new MemoryStream();
+                        using (var inflate = new DeflateStream(new MemoryStream(dataBytes, 2, dataBytes.Length - 2), CompressionMode.Decompress))
+                            inflate.CopyTo(decompressed);
 
-                            var inflateData = decompressed.ToArray();
-                            data.Write(inflateData, 0, inflateData.Length);
-                        }
+                        var inflateData = decompressed.ToArray();
+                        data.Write(inflateData, 0, inflateData.Length);
                     }
                 }
 

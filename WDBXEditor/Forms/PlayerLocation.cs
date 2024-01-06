@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Windows.Forms;
-using System.Linq;
-using static WDBXEditor.Common.Constants;
 using System.Collections.Generic;
-using System.IO;
+using System.Diagnostics;
 using System.Globalization;
-using System.Web.Script.Serialization;
+using System.IO;
+using System.Linq;
+using System.Text.Json;
+using System.Windows.Forms;
 using WDBXEditor.Reader;
+using static WDBXEditor.Common.Constants;
 
 namespace WDBXEditor.Forms
 {
@@ -54,7 +54,7 @@ namespace WDBXEditor.Forms
                 try
                 {
                     string json = File.ReadAllText(OFFSET_MAP_PATH);
-                    var offsets = new JavaScriptSerializer().Deserialize<List<OffsetMap>>(json);
+                    var offsets = JsonSerializer.Deserialize<List<OffsetMap>>(json);
                     offsetmaps.UnionWith(offsets);
                 }
                 catch
@@ -103,7 +103,7 @@ namespace WDBXEditor.Forms
 
         private void SaveBuilds()
         {
-            string json = new JavaScriptSerializer().Serialize(offsetmaps);
+            string json = JsonSerializer.Serialize(offsetmaps);
             using (var fs = File.CreateText(OFFSET_MAP_PATH))
                 fs.Write(json);
 
@@ -298,13 +298,13 @@ namespace WDBXEditor.Forms
         private void PlayerLocation_Activated(object sender, EventArgs e)
         {
             if (_closing) return;
-            this.Opacity = 1;
+            Opacity = 1;
         }
 
         private void PlayerLocation_Deactivate(object sender, EventArgs e)
         {
             if (_closing) return;
-            this.Opacity = 0.75f;
+            Opacity = 0.75f;
         }
 
         private void PlayerLocation_FormClosing(object sender, FormClosingEventArgs e)
@@ -344,12 +344,11 @@ namespace WDBXEditor.Forms
 
         private ulong ParseOffset(string text)
         {
-            ulong dmp;
 
             if (string.IsNullOrWhiteSpace(text)) //Empty string
                 return 0;
 
-            if (ulong.TryParse(text, out dmp)) //Normal number
+            if (ulong.TryParse(text, out ulong dmp)) //Normal number
                 return dmp;
 
             if (text.IndexOf("0x") == 0 && text.Length > 2) text = text.Substring(2); //Remove hex prefix

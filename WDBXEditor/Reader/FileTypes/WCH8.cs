@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using WDBXEditor.Storage;
 
 namespace WDBXEditor.Reader.FileTypes
 {
-    class WCH8 : WCH7
+    internal class WCH8 : WCH7
     {
         public WCH8()
         {
@@ -20,7 +15,7 @@ namespace WDBXEditor.Reader.FileTypes
         {
             StringTableOffset = 0x14;
             HeaderSize = 0x34;
-            this.FileName = filename;
+            FileName = filename;
         }
 
         public override void WriteRecordPadding(BinaryWriter bw, DBEntry entry, long offset)

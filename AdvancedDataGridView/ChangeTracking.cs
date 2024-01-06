@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,7 +7,7 @@ using System.Windows.Forms;
 
 namespace ADGV
 {
-    partial class AdvancedDataGridView : DataGridView
+    public partial class AdvancedDataGridView : DataGridView
     {
         public event EventHandler UndoRedoChanged;
         private const int BulkDeleteAmount = 25;
@@ -50,11 +49,11 @@ namespace ADGV
         {
             base.OnCellEndEdit(e);
 
-            if (!Compare(current, this.Rows[e.RowIndex].Cells[e.ColumnIndex].Value))
+            if (!Compare(current, Rows[e.RowIndex].Cells[e.ColumnIndex].Value))
             {
-                if(this.Rows[e.RowIndex].IsNewRow) //Technically OnUserAddedRow but fires this method
+                if (Rows[e.RowIndex].IsNewRow) //Technically OnUserAddedRow but fires this method
                 {
-                    OnUserAddedRow(new DataGridViewRowEventArgs(this.Rows[e.RowIndex]));
+                    OnUserAddedRow(new DataGridViewRowEventArgs(Rows[e.RowIndex]));
                 }
                 else
                 {
@@ -64,10 +63,10 @@ namespace ADGV
 
                     undoStack.Push(new ChangeSet(row, ChangeAction.Update)); //Store undo
                     redoStack.Clear(); //Clear redo
-                    ChangeValue(ToDataRow(this.Rows[e.RowIndex]));
+                    ChangeValue(ToDataRow(Rows[e.RowIndex]));
                 }
 
-                this.Invoke(UndoRedoChanged);
+                Invoke(UndoRedoChanged);
             }
         }
 
@@ -88,9 +87,9 @@ namespace ADGV
 
             //Commit
             ((BindingSource)DataSource).EndEdit();
-            this.EndEdit();
+            EndEdit();
 
-            this.Invoke(UndoRedoChanged); //Tell the main form things have changed
+            Invoke(UndoRedoChanged); //Tell the main form things have changed
         }
 
         public void OnUserAddedRow(DataGridViewRow e)
@@ -104,7 +103,7 @@ namespace ADGV
             redoStack.Clear(); //Clear redo
 
             RemoveRow(ToDataRow(e.Row)); //Cache change
-            this.Invoke(UndoRedoChanged); //Tell the main form things have changed
+            Invoke(UndoRedoChanged); //Tell the main form things have changed
             base.OnUserDeletingRow(e);
         }
 
@@ -112,12 +111,11 @@ namespace ADGV
         {
             if (undoStack.Count == 0)
             {
-                this.Invoke(UndoRedoChanged);
+                Invoke(UndoRedoChanged);
                 return;
             }
 
-            ChangeSet redo;
-            if (!undoStack.TryPop(out redo))
+            if (!undoStack.TryPop(out ChangeSet redo))
                 return;
 
             int index = ((BindingSource)DataSource).Find(primarykey.ColumnName, redo.Row.Cells[primarykey.Ordinal].Value);
@@ -152,7 +150,7 @@ namespace ADGV
                     }
 
                     ((BindingSource)DataSource).EndEdit();
-                    this.EndEdit();
+                    EndEdit();
 
                     Task.Run(() => ChangeValue(ToDataRow(Rows[index])));
                     break;
@@ -160,22 +158,21 @@ namespace ADGV
 
             //End edit
             ((BindingSource)DataSource).EndEdit();
-            this.EndEdit();
+            EndEdit();
 
             redoStack.Push(redo);
-            this.Invoke(UndoRedoChanged);
+            Invoke(UndoRedoChanged);
         }
 
         public void Redo()
         {
             if (redoStack.Count == 0)
             {
-                this.Invoke(UndoRedoChanged);
+                Invoke(UndoRedoChanged);
                 return;
             }
 
-            ChangeSet undo;
-            if (!redoStack.TryPop(out undo))
+            if (!redoStack.TryPop(out ChangeSet undo))
                 return;
 
             int index = ((BindingSource)DataSource).Find(primarykey.ColumnName, undo.Row.Cells[primarykey.Ordinal].Value);
@@ -210,7 +207,7 @@ namespace ADGV
                     }
 
                     ((BindingSource)DataSource).EndEdit();
-                    this.EndEdit();
+                    EndEdit();
 
                     Task.Run(() => ChangeValue(ToDataRow(Rows[index])));
                     break;
@@ -218,10 +215,10 @@ namespace ADGV
 
             //End Edit
             ((BindingSource)DataSource).EndEdit();
-            this.EndEdit();
+            EndEdit();
 
             undoStack.Push(undo);
-            this.Invoke(UndoRedoChanged);
+            Invoke(UndoRedoChanged);
         }
 
         public void ClearChanges()
@@ -239,7 +236,7 @@ namespace ADGV
         protected virtual void OnUndoRedoChanged(EventArgs e)
         {
             if (UndoRedoChanged != null)
-                this.UndoRedoChanged(this, e);
+                UndoRedoChanged(this, e);
         }
 
         private void BulkDeleteSelected()
@@ -262,7 +259,7 @@ namespace ADGV
 
             Task.Run(() => Init(true));
 
-            if (this.Rows.Count > 0)
+            if (Rows.Count > 0)
                 SelectRow(resetindex < 0 ? 0 : resetindex);
         }
 
@@ -274,12 +271,12 @@ namespace ADGV
 
             public ChangeSet(DataGridViewRow row, ChangeAction action, int index = -2)
             {
-                this.Row = (DataGridViewRow)row.Clone();
+                Row = (DataGridViewRow)row.Clone();
                 for (int i = 0; i < row.Cells.Count; i++)
-                    this.Row.Cells[i].Value = row.Cells[i].Value;
+                    Row.Cells[i].Value = row.Cells[i].Value;
 
-                this.Index = (index == -2 ? row.Index : index);
-                this.Action = action;
+                Index = (index == -2 ? row.Index : index);
+                Action = action;
             }
         }
 

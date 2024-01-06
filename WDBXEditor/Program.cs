@@ -1,12 +1,10 @@
 ﻿using System;
-using System.IO;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WDBXEditor.ConsoleHandler;
 
 namespace WDBXEditor
 {
-    static class Program
+    internal static class Program
     {
         public static bool PrimaryInstance = false;
 
@@ -14,7 +12,7 @@ namespace WDBXEditor
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             InstanceManager.InstanceCheck(args); //Check to see if we can run this instance
             InstanceManager.LoadDll("StormLib.dll"); //Loads the correct StormLib library
@@ -22,7 +20,7 @@ namespace WDBXEditor
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-			UpdateManager.Clean();
+            UpdateManager.Clean();
 
             if (args != null && args.Length > 0)
             {
@@ -36,9 +34,9 @@ namespace WDBXEditor
             else
             {
                 Application.Run(new Main()); //Default
-            }            
+            }
 
             InstanceManager.Stop();
-        }    
+        }
     }
 }

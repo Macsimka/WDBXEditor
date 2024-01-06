@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WDBXEditor.Storage;
-using System.Data;
-using System.Diagnostics;
 
 namespace WDBXEditor.Reader.FileTypes
 {
@@ -87,7 +82,7 @@ namespace WDBXEditor.Reader.FileTypes
 
                 //Write the data
                 bw.WriteArray(IndiciesTable.ToArray());
-                bw.WriteArray(StringLengthTable.ToArray());                    
+                bw.WriteArray(StringLengthTable.ToArray());
             }
         }
     }

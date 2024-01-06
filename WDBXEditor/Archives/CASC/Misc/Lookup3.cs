@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Text;
 
 namespace WDBXEditor.Archives.Misc
 {
-    public class  Lookup3
+    public class Lookup3
     {
         public ulong Hash(string data)
         {
-			data = data.Replace('/', '\\').ToUpperInvariant(); // fix string
-			return Hash(Encoding.ASCII.GetBytes(data));
+            data = data.Replace('/', '\\').ToUpperInvariant(); // fix string
+            return Hash(Encoding.ASCII.GetBytes(data));
         }
 
         public ulong Hash(byte[] data)
@@ -49,7 +48,7 @@ namespace WDBXEditor.Archives.Misc
             return ((ulong)c << 32) | b;
         }
 
-        void Mix(ref uint a, ref uint b, ref uint c)
+        private void Mix(ref uint a, ref uint b, ref uint c)
         {
             a -= c; a ^= Rot(c, 4); c += b;
             b -= a; b ^= Rot(a, 6); a += c;
@@ -59,7 +58,7 @@ namespace WDBXEditor.Archives.Misc
             c -= b; c ^= Rot(b, 4); b += a;
         }
 
-        void Final(ref uint a, ref uint b, ref uint c)
+        private void Final(ref uint a, ref uint b, ref uint c)
         {
             c ^= b; c -= Rot(b, 14);
             a ^= c; a -= Rot(c, 11);
@@ -70,7 +69,7 @@ namespace WDBXEditor.Archives.Misc
             c ^= b; c -= Rot(b, 24);
         }
 
-        uint Rot(uint x, int k)
+        private uint Rot(uint x, int k)
         {
             return (x << k) | (x >> (32 - k));
         }

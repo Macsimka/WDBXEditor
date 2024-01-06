@@ -2,13 +2,10 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace WDBXEditor.Common
 {
@@ -177,8 +174,8 @@ namespace WDBXEditor.Common
 
         public static void Detach(this DataTable table, string path)
         {
-            using (FileStream stream = new FileStream(path, FileMode.Create))
-                new BinaryFormatter().Serialize(stream, table);
+            //using (FileStream stream = new FileStream(path, FileMode.Create))
+            //    new BinaryFormatter().Serialize(stream, table);
         }
 
         public static object DefaultValue<T>(this T type) where T : Type

@@ -1,10 +1,8 @@
-﻿using WDBXEditor.Archives.MPQ.Native;
-using WDBXEditor.Archives.MPQ;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.IO.MemoryMappedFiles;
+using WDBXEditor.Archives.MPQ.Native;
 
 namespace WDBXEditor.Archives.MPQ
 {
@@ -211,8 +209,7 @@ namespace WDBXEditor.Archives.MPQ
         {
             VerifyHandle();
 
-            MpqFileSafeHandle fileHandle;
-            if (!NativeMethods.SFileOpenFileEx(_handle, fileName, 0, out fileHandle))
+            if (!NativeMethods.SFileOpenFileEx(_handle, fileName, 0, out MpqFileSafeHandle fileHandle))
                 throw new Win32Exception();
 
             MpqFileStream fs = new MpqFileStream(fileHandle, _accessType, this);
@@ -234,7 +231,7 @@ namespace WDBXEditor.Archives.MPQ
 
             return (MpqFileVerificationResults)NativeMethods.SFileVerifyFile(_handle, fileToVerify, 0);
         }
-        
+
         public MpqArchiveVerificationResult VerifyArchive()
         {
             VerifyHandle();

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace WDBXEditor.Archives.MPQ.Native
+﻿namespace WDBXEditor.Archives.MPQ.Native
 {
     internal enum SFileInfoClass
     {

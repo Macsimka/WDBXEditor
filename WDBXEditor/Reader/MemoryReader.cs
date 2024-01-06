@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace WDBXEditor.Reader
 {
@@ -47,8 +45,7 @@ namespace WDBXEditor.Reader
         public byte[] ReadBytes(IntPtr address, uint count)
         {
             var buffer = new byte[count];
-            int bytesRead;
-            if (!ReadProcessMemory(ProcessHandle, address, buffer, count, out bytesRead))
+            if (!ReadProcessMemory(ProcessHandle, address, buffer, count, out int bytesRead))
                 throw new Win32Exception(Marshal.GetLastWin32Error());
 
             if (bytesRead != count)
@@ -118,12 +115,12 @@ namespace WDBXEditor.Reader
             var buffer = new List<byte>();
 
             int i = 0;
-            byte current = Read<byte>((IntPtr)(address.ToInt32() + i));
+            byte current = Read<byte>(address.ToInt32() + i);
             while (current != 0)
             {
                 buffer.Add(current);
                 i++;
-                current = Read<byte>((IntPtr)(address.ToInt32() + i));
+                current = Read<byte>(address.ToInt32() + i);
             }
             return Encoding.UTF8.GetString(buffer.ToArray());
         }

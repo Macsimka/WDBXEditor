@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WDBXEditor.Reader
 {
@@ -24,28 +20,28 @@ namespace WDBXEditor.Reader
             }
         }
 
-		public int BitCount
-		{
-			get
-			{
-				int bitSize = 32 - Bits;
-				if (bitSize < 0)
-					bitSize = (bitSize * -1) + 32;
-				return bitSize;
-			}
-		}
+        public int BitCount
+        {
+            get
+            {
+                int bitSize = 32 - Bits;
+                if (bitSize < 0)
+                    bitSize = (bitSize * -1) + 32;
+                return bitSize;
+            }
+        }
 
 
         public FieldStructureEntry(short bits, ushort offset, byte commondatatype = 0xFF)
         {
-            this.Bits = bits;
-            this.Offset = offset;
-            this.CommonDataType = commondatatype;
+            Bits = bits;
+            Offset = offset;
+            CommonDataType = commondatatype;
         }
 
         public void SetLength(FieldStructureEntry nextField)
         {
-            this.Length = Math.Max(1, (int)Math.Floor((nextField.Offset - this.Offset) / (double)this.ByteCount));
+            Length = Math.Max(1, (int)Math.Floor((nextField.Offset - Offset) / (double)ByteCount));
         }
     }
 }

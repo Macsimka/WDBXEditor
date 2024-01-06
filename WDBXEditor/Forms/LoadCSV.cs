@@ -1,8 +1,8 @@
-﻿using WDBXEditor.Storage;
-using System;
-using System.Windows.Forms;
-using static WDBXEditor.Common.Constants;
+﻿using System;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using WDBXEditor.Storage;
+using static WDBXEditor.Common.Constants;
 
 namespace WDBXEditor
 {
@@ -31,8 +31,8 @@ namespace WDBXEditor
 
         private void btnLoad_Click(object sender, EventArgs e)
         {
-            ((Main)this.Owner).ProgressBarHandle(true, "Importing CSV...");
-            this.Enabled = false;
+            ((Main)Owner).ProgressBarHandle(true, "Importing CSV...");
+            Enabled = false;
             bool header = chkHeader.Checked;
 
             ImportFlags flags = ImportFlags.None;
@@ -56,9 +56,9 @@ namespace WDBXEditor
             })
             .ContinueWith(x =>
             {
-                this.Enabled = true;
-                this.DialogResult = x.Result;
-                this.Close();
+                Enabled = true;
+                DialogResult = x.Result;
+                Close();
 
             }, TaskScheduler.FromCurrentSynchronizationContext());
 
@@ -66,8 +66,8 @@ namespace WDBXEditor
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
+            DialogResult = DialogResult.Cancel;
+            Close();
         }
 
         private void chkFixIds_CheckedChanged(object sender, EventArgs e)

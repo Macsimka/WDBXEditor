@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.IO.Pipes;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -39,16 +36,14 @@ namespace WDBXEditor
         /// <param name="e"></param>
         private void Bw_DoWork(object sender, DoWorkEventArgs e)
         {
-            using (var server = new NamedPipeServerStream(NamedPipeName, PipeDirection.InOut, -1))
+            using var server = new NamedPipeServerStream(NamedPipeName, PipeDirection.InOut, -1);
+            try
             {
-                try
-                {
-                    server.WaitForConnection();
-                    using (StreamReader reader = new StreamReader(server))
-                        e.Result = reader.ReadToEnd();
-                }
-                catch { e.Result = ""; }
+                server.WaitForConnection();
+                using StreamReader reader = new StreamReader(server);
+                e.Result = reader.ReadToEnd();
             }
+            catch { e.Result = ""; }
         }
 
         /// <summary>
@@ -89,24 +84,20 @@ namespace WDBXEditor
 
         public bool Write(string text, int connectTimeout = 250)
         {
-            using (var client = new NamedPipeClientStream(NamedPipeName))
+            using var client = new NamedPipeClientStream(NamedPipeName);
+            try
             {
-                try
-                {
-                    client.Connect(connectTimeout);
-                    if (!client.IsConnected)
-                        return false;
-
-                    using (StreamWriter writer = new StreamWriter(client))
-                    {
-                        writer.Write(text);
-                        writer.Flush();
-                    }
-                }
-                catch
-                {
+                client.Connect(connectTimeout);
+                if (!client.IsConnected)
                     return false;
-                }
+
+                using StreamWriter writer = new StreamWriter(client);
+                writer.Write(text);
+                writer.Flush();
+            }
+            catch
+            {
+                return false;
             }
             return true;
         }

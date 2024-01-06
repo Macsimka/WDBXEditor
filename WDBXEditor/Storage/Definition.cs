@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 using static WDBXEditor.Common.Constants;
 
@@ -27,26 +25,24 @@ namespace WDBXEditor.Storage
             try
             {
                 XmlSerializer deser = new XmlSerializer(typeof(Definition));
-                using (var fs = new FileStream(path, FileMode.Open))
-                {
-                    Definition def = (Definition)deser.Deserialize(fs);
-                    var newtables = def.Tables.Where(x => Tables.Count(y => x.Build == y.Build && x.Name == y.Name) == 0).ToList();
-                    newtables.ForEach(x => x.Load());
-                    Tables.UnionWith(newtables.Where(x => x.Key != null));
-                    return true;
-                }
+                using var fs = new FileStream(path, FileMode.Open);
+                Definition def = (Definition)deser.Deserialize(fs);
+                var newtables = def.Tables.Where(x => Tables.Count(y => x.Build == y.Build && x.Name == y.Name) == 0).ToList();
+                newtables.ForEach(x => x.Load());
+                Tables.UnionWith(newtables.Where(x => x.Key != null));
+                return true;
             }
             catch { return false; }
         }
 
         public bool SaveDefinitions()
         {
-			string ValidFilename(string b)
-			{
-				return string.Join("_", b.Split(Path.GetInvalidFileNameChars(), StringSplitOptions.RemoveEmptyEntries)).TrimEnd('.') + ".xml";
-			}
+            string ValidFilename(string b)
+            {
+                return string.Join("_", b.Split(Path.GetInvalidFileNameChars(), StringSplitOptions.RemoveEmptyEntries)).TrimEnd('.') + ".xml";
+            }
 
-			try
+            try
             {
                 _loading = true;
 
@@ -54,15 +50,15 @@ namespace WDBXEditor.Storage
                 Tables.Clear();
                 foreach (var build in builds)
                 {
-					Definition _def = new Definition
-					{
-						Build = build.Key,
-						Tables = new HashSet<Table>(build)
-					};
+                    Definition _def = new Definition
+                    {
+                        Build = build.Key,
+                        Tables = new HashSet<Table>(build)
+                    };
 
-					XmlSerializer ser = new XmlSerializer(typeof(Definition));
-                    using (var fs = new FileStream(Path.Combine(DEFINITION_DIR, ValidFilename(BuildText(build.Key))), FileMode.Create))
-                        ser.Serialize(fs, _def);
+                    XmlSerializer ser = new XmlSerializer(typeof(Definition));
+                    using var fs = new FileStream(Path.Combine(DEFINITION_DIR, ValidFilename(BuildText(build.Key))), FileMode.Create);
+                    ser.Serialize(fs, _def);
                 }
 
                 _loading = false;

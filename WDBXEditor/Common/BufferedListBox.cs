@@ -2,11 +2,11 @@
 
 namespace WDBXEditor.Common
 {
-    class BufferedListBox : ListBox
+    internal class BufferedListBox : ListBox
     {
         public BufferedListBox()
         {
-            this.DoubleBuffered = true;
+            DoubleBuffered = true;
         }
     }
 }

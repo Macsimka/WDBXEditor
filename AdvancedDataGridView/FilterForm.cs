@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -50,16 +49,16 @@ namespace ADGV
             dgvFilter.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 
 
-            this.Text = "Filter";
+            Text = "Filter";
             label_columnName.Text = "Show rows where value";
 
-            if (dataType == typeof(Int32) || dataType == typeof(Int64) || dataType == typeof(Int16) ||
-                    dataType == typeof(UInt32) || dataType == typeof(UInt64) || dataType == typeof(UInt16) ||
-                    dataType == typeof(Byte) || dataType == typeof(SByte))
+            if (dataType == typeof(int) || dataType == typeof(long) || dataType == typeof(short) ||
+                    dataType == typeof(uint) || dataType == typeof(ulong) || dataType == typeof(ushort) ||
+                    dataType == typeof(byte) || dataType == typeof(sbyte))
                 _filterType = FilterType.Integer;
-            else if (dataType == typeof(Single) || dataType == typeof(Double) || dataType == typeof(Decimal))
+            else if (dataType == typeof(float) || dataType == typeof(double) || dataType == typeof(decimal))
                 _filterType = FilterType.Float;
-            else if (dataType == typeof(String))
+            else if (dataType == typeof(string))
                 _filterType = FilterType.String;
             else
                 _filterType = FilterType.Unknown;
@@ -170,7 +169,7 @@ namespace ADGV
                 string value = row.Cells["Value"].Value.ToString();
                 bool isnumber = (filterType == FilterType.Integer || filterType == FilterType.Float);
 
-                switch(filterType)
+                switch (filterType)
                 {
                     case FilterType.String:
                     case FilterType.Unknown:
@@ -191,7 +190,7 @@ namespace ADGV
                 switch (filter)
                 {
                     case "EQUALS":
-                            sb.Append($" {column} {(isnumber ? "=" : "LIKE")} '{value}'");
+                        sb.Append($" {column} {(isnumber ? "=" : "LIKE")} '{value}'");
                         break;
                     case "DOESN'T EQUAL":
                         sb.Append($" {column} {(isnumber ? "<>" : "NOT LIKE")} '{value}'");

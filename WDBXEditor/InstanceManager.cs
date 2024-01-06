@@ -3,7 +3,6 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Text.RegularExpressions;
@@ -80,7 +79,7 @@ namespace WDBXEditor
         /// <param name="filenames"></param>
         public static void OpenRequest(string filenames)
         {
-            string[] files = filenames.Split((Char)3);
+            string[] files = filenames.Split((char)3);
             Parallel.For(0, files.Length, f =>
             {
                 if (Regex.IsMatch(files[f], Constants.FileRegexPattern, RegexOptions.Compiled | RegexOptions.IgnoreCase))
@@ -113,20 +112,18 @@ namespace WDBXEditor
         {
             Stop(); //Stop server
 
-            using (Process p = new Process())
-            {
-                p.StartInfo.FileName = Application.ExecutablePath;
-                p.StartInfo.Arguments = string.Join(" ", files);
-                bool started = p.Start();
+            using Process p = new Process();
+            p.StartInfo.FileName = Application.ExecutablePath;
+            p.StartInfo.Arguments = string.Join(" ", files);
+            bool started = p.Start();
 
-                while (started && p.MainWindowHandle == IntPtr.Zero) //Await the program to fully load
-                    Thread.Sleep(50);
+            while (started && p.MainWindowHandle == IntPtr.Zero) //Await the program to fully load
+                Thread.Sleep(50);
 
-                if (Program.PrimaryInstance)
-                    Start(); //Start server
+            if (Program.PrimaryInstance)
+                Start(); //Start server
 
-                return started;
-            }
+            return started;
         }
 
         public static IEnumerable<string> GetFilesToOpen()
@@ -134,8 +131,7 @@ namespace WDBXEditor
             HashSet<string> files = new HashSet<string>();
             while (AutoRun.Count > 0)
             {
-                string file;
-                if (AutoRun.TryDequeue(out file) && File.Exists(file))
+                if (AutoRun.TryDequeue(out string file) && File.Exists(file))
                     files.Add(file);
             }
             return files;
@@ -158,14 +154,14 @@ namespace WDBXEditor
 
         private static void SendData(string[] args)
         {
-            SendData(string.Join(((Char)3).ToString(), args));
+            SendData(string.Join(((char)3).ToString(), args));
         }
         #endregion
 
         #region Flash Methods
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool FlashWindowEx(ref FLASHWINFO pwfi);
+        private static extern bool FlashWindowEx(ref FLASHWINFO pwfi);
 
         [StructLayout(LayoutKind.Sequential)]
         internal struct FLASHWINFO

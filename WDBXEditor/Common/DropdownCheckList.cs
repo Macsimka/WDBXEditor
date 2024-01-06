@@ -4,7 +4,6 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using WDBXEditor.Storage;
 using static System.Windows.Forms.CheckedListBox;
 
 namespace WDBXEditor.Common
@@ -32,7 +31,7 @@ namespace WDBXEditor.Common
             {
                 if (i == lbItems.Items.Count - 1)
                 {
-                    //Last item force update                    
+                    //Last item force update
                     lbItems.SetItemChecked(i, false);
                     _loading = false;
                     lbItems.SetItemChecked(i, true);
@@ -56,7 +55,7 @@ namespace WDBXEditor.Common
 
         private void cbBox_DropDownClosed(object sender, EventArgs e)
         {
-            if (lbItems.ClientRectangle.Contains(this.PointToClient(MousePosition)))
+            if (lbItems.ClientRectangle.Contains(PointToClient(MousePosition)))
                 return;
 
             SetState(false);
@@ -77,7 +76,7 @@ namespace WDBXEditor.Common
 
         private void MouseLeaveCheck(object sender, EventArgs e)
         {
-            if (this.ClientRectangle.Contains(this.PointToClient(MousePosition)))
+            if (ClientRectangle.Contains(PointToClient(MousePosition)))
                 return;
 
             SetState(false);
@@ -94,9 +93,9 @@ namespace WDBXEditor.Common
         {
             if (open)
             {
-                this.Height = cbBox.Height + ListHeight;
+                Height = cbBox.Height + ListHeight;
                 lbItems.Visible = true;
-                lbItems.Height = this.ListHeight;
+                lbItems.Height = ListHeight;
                 lbItems.BringToFront();
 
                 if (lbItems.Items.Count > 0)
@@ -113,7 +112,7 @@ namespace WDBXEditor.Common
             {
                 lbItems.Height = 0;
                 lbItems.Visible = false;
-                this.Height = cbBox.Height;
+                Height = cbBox.Height;
             }
         }
 
@@ -126,8 +125,8 @@ namespace WDBXEditor.Common
 
         private void DropdownCheckList_EnabledChanged(object sender, EventArgs e)
         {
-            cbBox.Enabled = this.Enabled;
-            lbItems.Enabled = this.Enabled;
+            cbBox.Enabled = Enabled;
+            lbItems.Enabled = Enabled;
         }
 
         private void lbItems_ItemCheck(object sender, ItemCheckEventArgs e)

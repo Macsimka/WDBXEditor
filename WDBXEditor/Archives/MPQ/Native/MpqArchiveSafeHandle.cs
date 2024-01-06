@@ -1,9 +1,5 @@
 ﻿using Microsoft.Win32.SafeHandles;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
 
 namespace WDBXEditor.Archives.MPQ.Native
 {
@@ -12,7 +8,7 @@ namespace WDBXEditor.Archives.MPQ.Native
         public MpqArchiveSafeHandle(IntPtr handle)
             : base(true)
         {
-            this.SetHandle(handle);
+            SetHandle(handle);
         }
 
         public MpqArchiveSafeHandle()
@@ -20,7 +16,7 @@ namespace WDBXEditor.Archives.MPQ.Native
 
         protected override bool ReleaseHandle()
         {
-            return NativeMethods.SFileCloseArchive(this.handle);
+            return NativeMethods.SFileCloseArchive(handle);
         }
     }
 }

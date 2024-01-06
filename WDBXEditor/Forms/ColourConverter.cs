@@ -2,7 +2,6 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using WDBXEditor.Common;
 
 namespace WDBXEditor.Forms
 {
@@ -50,8 +49,7 @@ namespace WDBXEditor.Forms
 
         private void txtWoWVal_KeyUp(object sender, KeyEventArgs e)
         {
-            ulong dmp;
-            if (!ulong.TryParse(txtWoWVal.Text, out dmp))
+            if (!ulong.TryParse(txtWoWVal.Text, out ulong dmp))
                 txtWoWVal.Text = "0";
             else if (dmp > uint.MaxValue)
                 txtWoWVal.Text = uint.MaxValue.ToString();
@@ -74,8 +72,7 @@ namespace WDBXEditor.Forms
 
         private void txtColourKeyUp(object sender, KeyEventArgs e)
         {
-            ulong dmp;
-            if (!ulong.TryParse(txtBlue.Text, out dmp)) //Check blue
+            if (!ulong.TryParse(txtBlue.Text, out ulong dmp)) //Check blue
                 txtBlue.Text = "0";
             else if (dmp > 255)
                 txtBlue.Text = "255";
@@ -99,8 +96,7 @@ namespace WDBXEditor.Forms
         #region Button Events
         private void btnGet_Click(object sender, EventArgs e)
         {
-            ulong dmp;
-            ulong.TryParse(_data.CurrentCell.Value.ToString(), out dmp);
+            ulong.TryParse(_data.CurrentCell.Value.ToString(), out ulong dmp);
             if (dmp > uint.MaxValue)
                 dmp = uint.MaxValue;
 
@@ -122,13 +118,13 @@ namespace WDBXEditor.Forms
         private void ColourConverter_Activated(object sender, EventArgs e)
         {
             if (_closing) return;
-            this.Opacity = 1;
+            Opacity = 1;
         }
 
         private void ColourConverter_Deactivate(object sender, EventArgs e)
         {
             if (_closing) return;
-            this.Opacity = 0.75f;
+            Opacity = 0.75f;
         }
 
         private void ColourConverter_FormClosing(object sender, FormClosingEventArgs e)

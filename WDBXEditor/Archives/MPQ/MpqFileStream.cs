@@ -1,11 +1,8 @@
-﻿using WDBXEditor.Archives.MPQ.Native;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
+using WDBXEditor.Archives.MPQ.Native;
 
 namespace WDBXEditor.Archives.MPQ
 {

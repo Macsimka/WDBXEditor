@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading;
+﻿using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WDBXEditor.Common
 {
-    class AutoProgressBar : ProgressBar
+    internal class AutoProgressBar : ProgressBar
     {
         private BackgroundWorker bgw = new BackgroundWorker();
 
@@ -17,8 +12,8 @@ namespace WDBXEditor.Common
         {
             if (bgw.IsBusy) return;
 
-            this.Style = ProgressBarStyle.Continuous;
-            this.Value = 0;
+            Style = ProgressBarStyle.Continuous;
+            Value = 0;
             bgw.DoWork += new DoWorkEventHandler(bgw_DoWork);
             bgw.ProgressChanged += new ProgressChangedEventHandler(bgw_ProgressChanged);
             bgw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bgw_RunWorkerCompleted);
@@ -27,7 +22,7 @@ namespace WDBXEditor.Common
             bgw.RunWorkerAsync(increment);
         }
 
-        void bgw_DoWork(object sender, DoWorkEventArgs e)
+        private void bgw_DoWork(object sender, DoWorkEventArgs e)
         {
             int inc = (int)e.Argument;
             int i = 0;
@@ -49,13 +44,13 @@ namespace WDBXEditor.Common
             }
         }
 
-        void bgw_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        private void bgw_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             if (!bgw.CancellationPending)
-                this.Invoke((MethodInvoker)delegate { Value = e.ProgressPercentage; });
+                Invoke((MethodInvoker)delegate { Value = e.ProgressPercentage; });
         }
 
-        void bgw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void bgw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             Task.Run(() => ClearValue());
         }
@@ -73,9 +68,9 @@ namespace WDBXEditor.Common
         {
             await Task.Factory.StartNew(() =>
             {
-                while (bgw.CancellationPending || this.Value != 0)
+                while (bgw.CancellationPending || Value != 0)
                 {
-                    this.Invoke((MethodInvoker)delegate { this.Value = 0; });
+                    Invoke((MethodInvoker)delegate { Value = 0; });
                     Task.Delay(50).Wait();
                 }
             });

@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using WDBXEditor.Storage;
 
 namespace WDBXEditor.Common
 {
-    static class FormHandler
+    internal static class FormHandler
     {
         private static Main _Parent;
         private static Dictionary<Type, Form> _Forms = new Dictionary<Type, Form>();
@@ -22,7 +19,6 @@ namespace WDBXEditor.Common
         {
             var type = typeof(T);
             bool findreplace = typeof(T) == typeof(FindReplace);
-            Form f = null;
 
             if (findreplace) //FindReplace argument check
             {
@@ -32,7 +28,7 @@ namespace WDBXEditor.Common
                     throw new ArgumentException("FindReplace argument should be a boolean.");
             }
 
-            if (_Forms.TryGetValue(type, out f))
+            if (_Forms.TryGetValue(type, out Form f))
             {
                 f.BringToFront();
                 f.Activate();
@@ -61,8 +57,7 @@ namespace WDBXEditor.Common
         public static void Close<T>()
         {
             var type = typeof(T);
-            Form f = null;
-            if (_Forms.TryGetValue(type, out f))
+            if (_Forms.TryGetValue(type, out Form f))
                 f?.Close();
         }
 

@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using WDBXEditor.Common;
 using WDBXEditor.Storage;
 using static WDBXEditor.Common.Constants;
 
@@ -32,9 +29,9 @@ namespace WDBXEditor.Reader.FileTypes
             CommonDataTableSize = dbReader.ReadUInt32();
 
             if (HasIndexTable)
-                IdIndex = 0; //Ignored if Index Table    
+                IdIndex = 0; //Ignored if Index Table
 
-			InternalRecordSize = RecordSize; //RecordSize header field is not right anymore
+            InternalRecordSize = RecordSize; //RecordSize header field is not right anymore
 
             //Gather field structures
             FieldStructure = new List<FieldStructureEntry>();
@@ -49,8 +46,8 @@ namespace WDBXEditor.Reader.FileTypes
 
             if (HasIndexTable)
             {
-				InternalRecordSize += 4;
-				FieldCount++;
+                InternalRecordSize += 4;
+                FieldCount++;
                 FieldStructure.Insert(0, new FieldStructureEntry(0, 0));
 
                 if (FieldCount > 1)
@@ -95,11 +92,11 @@ namespace WDBXEditor.Reader.FileTypes
                 }
             }
 
-			if (HasRelationshipData)
-				dbReader.BaseStream.Position += (MaxId - MinId + 1) * 4;
+            if (HasRelationshipData)
+                dbReader.BaseStream.Position += (MaxId - MinId + 1) * 4;
 
-			//Index table
-			if (HasIndexTable)
+            //Index table
+            if (HasIndexTable)
             {
                 //Offset map alone reads straight into this others may not
                 if (!HasOffsetTable || HasRelationshipData)
@@ -249,7 +246,7 @@ namespace WDBXEditor.Reader.FileTypes
                 }
 
                 commondatalookup = null;
-				InternalRecordSize = (uint)CopyTable.Values.First().Length;
+                InternalRecordSize = (uint)CopyTable.Values.First().Length;
             }
 
             return CopyTable;
@@ -305,7 +302,7 @@ namespace WDBXEditor.Reader.FileTypes
 
             for (int i = 0; i < FieldStructure.Count; i++)
             {
-                var field = TableStructure.Fields[i].InternalName;                
+                var field = TableStructure.Fields[i].InternalName;
                 var defaultValue = TableStructure.Fields[i].DefaultValue;
                 var typeCode = Type.GetTypeCode(entry.Data.Columns[field].DataType);
                 var pk = entry.Data.PrimaryKey[0];

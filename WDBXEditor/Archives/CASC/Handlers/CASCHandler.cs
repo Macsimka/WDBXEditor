@@ -14,19 +14,16 @@ namespace WDBXEditor.Archives.CASC.Handlers
     public class CASCHandler : IDisposable
     {
         public string BasePath { get; set; }
-        
-        List<IndexFile> idxFiles = new List<IndexFile>();
-        List<string> indexFiles = new List<string>();
-        ConcurrentDictionary<uint, DataFile> dataFiles = new ConcurrentDictionary<uint, DataFile>();
 
-        BuildInfo buildInfo;
-        BuildConfig buildConfig;
-        CDNConfig cdnConfig;
-
-        EncodingFile encodingFile;
-        RootFile rootFile;
-
-        Lookup3 lookup3;
+        private List<IndexFile> idxFiles = new List<IndexFile>();
+        private List<string> indexFiles = new List<string>();
+        private ConcurrentDictionary<uint, DataFile> dataFiles = new ConcurrentDictionary<uint, DataFile>();
+        private BuildInfo buildInfo;
+        private BuildConfig buildConfig;
+        private CDNConfig cdnConfig;
+        private EncodingFile encodingFile;
+        private RootFile rootFile;
+        private Lookup3 lookup3;
 
         public CASCHandler(string basePath)
         {
@@ -40,7 +37,7 @@ namespace WDBXEditor.Archives.CASC.Handlers
             for (var i = 0; i <= 0xF; i++)
             {
                 // Always get the last element in sequence for latest file data.
-                var idxFile = Directory.GetFiles(BasePath + "/Data/data", $"{i :x2}*.idx").Last();
+                var idxFile = Directory.GetFiles(BasePath + "/Data/data", $"{i:x2}*.idx").Last();
 
                 idxFiles.Add(new IndexFile(idxFile));
             }
@@ -349,7 +346,7 @@ namespace WDBXEditor.Archives.CASC.Handlers
 
         public void Dispose()
         {
-            
+
         }
     }
 }

@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using WDBXEditor.Storage;
 using static WDBXEditor.Common.Constants;
 
@@ -24,7 +21,7 @@ namespace WDBXEditor.Reader.FileTypes
 
         protected WDB5 WDB5CounterPart;
         protected int OffsetMapOffset = 0x30;
-        
+
         public WCH5()
         {
             HeaderSize = 0x30;
@@ -33,7 +30,7 @@ namespace WDBXEditor.Reader.FileTypes
         public WCH5(string filename)
         {
             HeaderSize = 0x30;
-            this.FileName = filename;
+            FileName = filename;
         }
 
         #region Read
@@ -155,9 +152,9 @@ namespace WDBXEditor.Reader.FileTypes
 
             public OffsetEntry(int id, int offset, short length)
             {
-                this.Id = id;
-                this.Offset = offset;
-                this.Length = length;
+                Id = id;
+                Offset = offset;
+                Length = length;
             }
         }
         #endregion
@@ -184,7 +181,7 @@ namespace WDBXEditor.Reader.FileTypes
                 OffsetMapOffset = (int)bw.BaseStream.Position;
                 bw.BaseStream.Position += entry.GetPrimaryKeys().Count() * (sizeof(int) + sizeof(int) + sizeof(short));
             }
-                
+
         }
 
         public override void WriteOffsetMap(BinaryWriter bw, DBEntry entry, List<Tuple<int, short>> OffsetMap, int record_offset = 0)

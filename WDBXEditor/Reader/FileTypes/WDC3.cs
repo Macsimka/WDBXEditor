@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WDBXEditor.Storage;
 using static WDBXEditor.Common.Constants;
 
 namespace WDBXEditor.Reader.FileTypes
 {
-    class WDC3 : WDC2
+    internal class WDC3 : WDC2
     {
         public int Unknown3;
 
@@ -223,7 +221,7 @@ namespace WDBXEditor.Reader.FileTypes
                     // append relationship id
                     if (RelationShipData != null)
                     {
-                        // seen cases of missing indicies 
+                        // seen cases of missing indicies
                         if (RelationShipData.Entries.TryGetValue((uint)i, out byte[] foreignData))
                             recordbytes = recordbytes.Concat(foreignData);
                         else
@@ -334,7 +332,7 @@ namespace WDBXEditor.Reader.FileTypes
                     // append relationship id
                     if (RelationShipData != null)
                     {
-                        // seen cases of missing indicies 
+                        // seen cases of missing indicies
                         if (RelationShipData.Entries.TryGetValue((uint)i, out byte[] foreignData))
                             data.AddRange(foreignData);
                         else
@@ -437,7 +435,7 @@ namespace WDBXEditor.Reader.FileTypes
             bw.Write(Unknown1);
             bw.Write(Unknown2);
 
-            bw.Write(0);  // RecordDataOffset					
+            bw.Write(0);  // RecordDataOffset
             if (entry.Header.CopyTableSize > 0) // RecordDataRowCount
                 bw.Write(entry.GetUniqueRows().Count());
             else
@@ -484,7 +482,7 @@ namespace WDBXEditor.Reader.FileTypes
 
             long pos = bw.BaseStream.Position;
 
-            // get a list of identical records			
+            // get a list of identical records
             if (CopyTableSize > 0)
             {
                 var copyids = Enumerable.Empty<int>();
@@ -589,30 +587,30 @@ namespace WDBXEditor.Reader.FileTypes
                             break;
 
                         case CompressionType.Sparse:
-                            {
-                                Array.Resize(ref data[0], 4);
-                                if (BitConverter.ToInt32(data[0], 0) != ColumnMeta[fieldIndex].BitOffset)
-                                    ColumnMeta[fieldIndex].SparseValues.Add(id, data[0]);
-                            }
-                            break;
+                        {
+                            Array.Resize(ref data[0], 4);
+                            if (BitConverter.ToInt32(data[0], 0) != ColumnMeta[fieldIndex].BitOffset)
+                                ColumnMeta[fieldIndex].SparseValues.Add(id, data[0]);
+                        }
+                        break;
 
                         case CompressionType.Pallet:
                         case CompressionType.PalletArray:
-                            {
-                                byte[] combined = data.SelectMany(x => x.Concat(new byte[4]).Take(4)).ToArray(); // enforce int size rule
+                        {
+                            byte[] combined = data.SelectMany(x => x.Concat(new byte[4]).Take(4)).ToArray(); // enforce int size rule
 
-                                int index = ColumnMeta[fieldIndex].PalletValues.FindIndex(x => x.SequenceEqual(combined));
-                                if (index > -1)
-                                {
-                                    bitStream.WriteUInt32((uint)index, bitWidth);
-                                }
-                                else
-                                {
-                                    bitStream.WriteUInt32((uint)ColumnMeta[fieldIndex].PalletValues.Count, bitWidth);
-                                    ColumnMeta[fieldIndex].PalletValues.Add(combined);
-                                }
+                            int index = ColumnMeta[fieldIndex].PalletValues.FindIndex(x => x.SequenceEqual(combined));
+                            if (index > -1)
+                            {
+                                bitStream.WriteUInt32((uint)index, bitWidth);
                             }
-                            break;
+                            else
+                            {
+                                bitStream.WriteUInt32((uint)ColumnMeta[fieldIndex].PalletValues.Count, bitWidth);
+                                ColumnMeta[fieldIndex].PalletValues.Add(combined);
+                            }
+                        }
+                        break;
 
                         default:
                             throw new Exception("Unsupported compression type " + ColumnMeta[fieldIndex].CompressionType);
@@ -702,7 +700,7 @@ namespace WDBXEditor.Reader.FileTypes
                 }
             }
 
-            // push bitstream to 
+            // push bitstream to
             bitStream.CopyStreamTo(bw.BaseStream);
             bitStream.Dispose();
 
