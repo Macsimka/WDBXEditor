@@ -47,10 +47,6 @@ namespace WDBXEditor
 
         private void Main_Load(object sender, EventArgs e)
         {
-#if DEBUG
-            wdb5ParserToolStripMenuItem.Visible = true;
-#endif
-
             //Create temp directory
             if (!Directory.Exists(TEMP_FOLDER))
                 Directory.CreateDirectory(TEMP_FOLDER);
@@ -153,7 +149,6 @@ namespace WDBXEditor
                 advancedDataGridView.CurrentCell = advancedDataGridView.Rows[0].Cells[0];
 
                 txtStats.Text = $"{LoadedEntry.Data.Columns.Count} fields, {LoadedEntry.Data.Rows.Count} rows";
-                wotLKItemFixToolStripMenuItem.Enabled = LoadedEntry.IsFileOf("Item", Expansion.WotLK); //Control WotLK Item Fix
                 colourPickerToolStripMenuItem.Enabled = (LoadedEntry.IsFileOf("LightIntBand") || LoadedEntry.IsFileOf("LightData")); //Colour picker
                 if (!colourPickerToolStripMenuItem.Enabled)
                     FormHandler.Close<ColourConverter>(); //Close if different DB file
@@ -606,11 +601,6 @@ namespace WDBXEditor
             NewLine();
         }
 
-        private void playerLocationRecorderToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            FormHandler.Show<PlayerLocation>();
-        }
-
         private void colourPickerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FormHandler.Show<ColourConverter>();
@@ -842,26 +832,6 @@ namespace WDBXEditor
             ProgressBarHandle(false);
         }
 
-        #endregion
-
-        #region Tool Menu Items
-        /// <summary>
-        /// Loads Item.dbc rows from item_template database table
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void wotLKItemFixToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            using var itemfix = new WotLKItemFix();
-            itemfix.Entry = LoadedEntry;
-            if (itemfix.ShowDialog(this) == DialogResult.OK)
-                SetSource(LoadedEntry);
-        }
-
-        private void legionToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            new LegionParser().ShowDialog(this);
-        }
         #endregion
 
         #region File ListView
