@@ -586,11 +586,6 @@ namespace WDBXEditor
             new About().ShowDialog(this);
         }
 
-        private void helpToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            Help.ShowHelp(this, Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Help.chm"));
-        }
-
         private void insertToolStripMenuItem_Click(object sender, EventArgs e)
         {
             InsertLine();

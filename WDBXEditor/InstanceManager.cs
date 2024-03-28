@@ -137,13 +137,6 @@ namespace WDBXEditor
             return files;
         }
 
-        public static bool IsRunningAsAdmin()
-        {
-            WindowsPrincipal principal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
-            return principal.IsInRole(WindowsBuiltInRole.Administrator);
-        }
-
-
         #region Send Data
         private static void SendData(string args)
         {

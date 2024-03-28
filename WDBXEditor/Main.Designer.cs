@@ -91,7 +91,6 @@ namespace WDBXEditor
             editDefinitionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             colourPickerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             openFileDialog = new System.Windows.Forms.OpenFileDialog();
             label3 = new System.Windows.Forms.Label();
@@ -596,7 +595,7 @@ namespace WDBXEditor
             //
             fromSQLToolStripMenuItem.Image = Properties.Resources.sql;
             fromSQLToolStripMenuItem.Name = "fromSQLToolStripMenuItem";
-            fromSQLToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            fromSQLToolStripMenuItem.Size = new System.Drawing.Size(156, 26);
             fromSQLToolStripMenuItem.Text = "From SQL";
             fromSQLToolStripMenuItem.Click += fromSQLToolStripMenuItem_Click;
             //
@@ -604,7 +603,7 @@ namespace WDBXEditor
             //
             fromCSVToolStripMenuItem.Image = Properties.Resources.csv;
             fromCSVToolStripMenuItem.Name = "fromCSVToolStripMenuItem";
-            fromCSVToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            fromCSVToolStripMenuItem.Size = new System.Drawing.Size(156, 26);
             fromCSVToolStripMenuItem.Text = "From CSV";
             fromCSVToolStripMenuItem.Click += fromCSVToolStripMenuItem_Click;
             //
@@ -634,22 +633,15 @@ namespace WDBXEditor
             //
             // helpToolStripMenuItem
             //
-            helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { helpToolStripMenuItem1, aboutToolStripMenuItem });
+            helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { aboutToolStripMenuItem });
             helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             helpToolStripMenuItem.Size = new System.Drawing.Size(55, 24);
             helpToolStripMenuItem.Text = "Help";
             //
-            // helpToolStripMenuItem1
-            //
-            helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
-            helpToolStripMenuItem1.Size = new System.Drawing.Size(133, 26);
-            helpToolStripMenuItem1.Text = "Help";
-            helpToolStripMenuItem1.Click += helpToolStripMenuItem1_Click;
-            //
             // aboutToolStripMenuItem
             //
             aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            aboutToolStripMenuItem.Size = new System.Drawing.Size(133, 26);
+            aboutToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             aboutToolStripMenuItem.Text = "About";
             aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
             //
@@ -891,7 +883,6 @@ namespace WDBXEditor
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.GroupBox gbFilter;
         private System.Windows.Forms.Button btnReset;
