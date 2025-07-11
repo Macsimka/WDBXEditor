@@ -58,8 +58,6 @@ namespace WDBXEditor
             menuStrip = new System.Windows.Forms.MenuStrip();
             fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             loadFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            openFromMPQToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            openFromCASCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             recentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -82,7 +80,6 @@ namespace WDBXEditor
             toSQLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             toSQLFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             toCSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            toMPQToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             toJSONToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             fromSQLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -366,7 +363,7 @@ namespace WDBXEditor
             //
             // fileToolStripMenuItem
             //
-            fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { loadFilesToolStripMenuItem, openFromMPQToolStripMenuItem, openFromCASCToolStripMenuItem, recentToolStripMenuItem, saveToolStripMenuItem, saveAsToolStripMenuItem, saveAllToolStripMenuItem, reloadToolStripMenuItem, closeToolStripMenuItem, closeAllToolStripMenuItem });
+            fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { loadFilesToolStripMenuItem, recentToolStripMenuItem, saveToolStripMenuItem, saveAsToolStripMenuItem, saveAllToolStripMenuItem, reloadToolStripMenuItem, closeToolStripMenuItem, closeAllToolStripMenuItem });
             fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             fileToolStripMenuItem.Size = new System.Drawing.Size(46, 24);
             fileToolStripMenuItem.Text = "File";
@@ -379,22 +376,6 @@ namespace WDBXEditor
             loadFilesToolStripMenuItem.Size = new System.Drawing.Size(246, 26);
             loadFilesToolStripMenuItem.Text = "Open File(s)";
             loadFilesToolStripMenuItem.Click += loadFilesToolStripMenuItem_Click;
-            //
-            // openFromMPQToolStripMenuItem
-            //
-            openFromMPQToolStripMenuItem.Image = Properties.Resources.open;
-            openFromMPQToolStripMenuItem.Name = "openFromMPQToolStripMenuItem";
-            openFromMPQToolStripMenuItem.Size = new System.Drawing.Size(246, 26);
-            openFromMPQToolStripMenuItem.Text = "Open from MPQ";
-            openFromMPQToolStripMenuItem.Click += openFromMPQToolStripMenuItem_Click;
-            //
-            // openFromCASCToolStripMenuItem
-            //
-            openFromCASCToolStripMenuItem.Image = Properties.Resources.open;
-            openFromCASCToolStripMenuItem.Name = "openFromCASCToolStripMenuItem";
-            openFromCASCToolStripMenuItem.Size = new System.Drawing.Size(246, 26);
-            openFromCASCToolStripMenuItem.Text = "Open from CASC";
-            openFromCASCToolStripMenuItem.Click += openFromCASCToolStripMenuItem_Click;
             //
             // recentToolStripMenuItem
             //
@@ -468,21 +449,21 @@ namespace WDBXEditor
             //
             newLineToolStripMenuItem.Name = "newLineToolStripMenuItem";
             newLineToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N;
-            newLineToolStripMenuItem.Size = new System.Drawing.Size(218, 26);
+            newLineToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             newLineToolStripMenuItem.Text = "New Line";
             newLineToolStripMenuItem.Click += newLineToolStripMenuItem_Click;
             //
             // toolStripSeparator4
             //
             toolStripSeparator4.Name = "toolStripSeparator4";
-            toolStripSeparator4.Size = new System.Drawing.Size(215, 6);
+            toolStripSeparator4.Size = new System.Drawing.Size(221, 6);
             //
             // undoToolStripMenuItem
             //
             undoToolStripMenuItem.Enabled = false;
             undoToolStripMenuItem.Name = "undoToolStripMenuItem";
             undoToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z;
-            undoToolStripMenuItem.Size = new System.Drawing.Size(218, 26);
+            undoToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             undoToolStripMenuItem.Text = "Undo";
             undoToolStripMenuItem.Click += undoToolStripMenuItem_Click;
             //
@@ -491,33 +472,33 @@ namespace WDBXEditor
             redoToolStripMenuItem.Enabled = false;
             redoToolStripMenuItem.Name = "redoToolStripMenuItem";
             redoToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift | System.Windows.Forms.Keys.Z;
-            redoToolStripMenuItem.Size = new System.Drawing.Size(218, 26);
+            redoToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             redoToolStripMenuItem.Text = "Redo";
             redoToolStripMenuItem.Click += redoToolStripMenuItem_Click;
             //
             // toolStripSeparator3
             //
             toolStripSeparator3.Name = "toolStripSeparator3";
-            toolStripSeparator3.Size = new System.Drawing.Size(215, 6);
+            toolStripSeparator3.Size = new System.Drawing.Size(221, 6);
             //
             // goToToolStripMenuItem
             //
             goToToolStripMenuItem.Name = "goToToolStripMenuItem";
             goToToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.G;
-            goToToolStripMenuItem.Size = new System.Drawing.Size(218, 26);
+            goToToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             goToToolStripMenuItem.Text = "&Go To...";
             goToToolStripMenuItem.Click += gotoIdToolStripMenuItem_Click;
             //
             // toolStripSeparator2
             //
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new System.Drawing.Size(215, 6);
+            toolStripSeparator2.Size = new System.Drawing.Size(221, 6);
             //
             // findToolStripMenuItem
             //
             findToolStripMenuItem.Name = "findToolStripMenuItem";
             findToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F;
-            findToolStripMenuItem.Size = new System.Drawing.Size(218, 26);
+            findToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             findToolStripMenuItem.Text = "&Find...";
             findToolStripMenuItem.Click += findToolStripMenuItem_Click;
             //
@@ -525,7 +506,7 @@ namespace WDBXEditor
             //
             replaceToolStripMenuItem.Name = "replaceToolStripMenuItem";
             replaceToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H;
-            replaceToolStripMenuItem.Size = new System.Drawing.Size(218, 26);
+            replaceToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             replaceToolStripMenuItem.Text = "&Replace...";
             replaceToolStripMenuItem.Click += replaceToolStripMenuItem_Click;
             //
@@ -533,13 +514,13 @@ namespace WDBXEditor
             //
             insertToolStripMenuItem.Name = "insertToolStripMenuItem";
             insertToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I;
-            insertToolStripMenuItem.Size = new System.Drawing.Size(218, 26);
+            insertToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             insertToolStripMenuItem.Text = "Insert Line";
             insertToolStripMenuItem.Click += insertToolStripMenuItem_Click;
             //
             // exportToolStripMenuItem
             //
-            exportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { toSQLToolStripMenuItem, toSQLFileToolStripMenuItem, toCSVToolStripMenuItem, toMPQToolStripMenuItem, toJSONToolStripMenuItem });
+            exportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { toSQLToolStripMenuItem, toSQLFileToolStripMenuItem, toCSVToolStripMenuItem, toJSONToolStripMenuItem });
             exportToolStripMenuItem.Name = "exportToolStripMenuItem";
             exportToolStripMenuItem.Size = new System.Drawing.Size(66, 24);
             exportToolStripMenuItem.Text = "Export";
@@ -548,7 +529,7 @@ namespace WDBXEditor
             //
             toSQLToolStripMenuItem.Image = Properties.Resources.sql;
             toSQLToolStripMenuItem.Name = "toSQLToolStripMenuItem";
-            toSQLToolStripMenuItem.Size = new System.Drawing.Size(165, 26);
+            toSQLToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             toSQLToolStripMenuItem.Text = "To SQL";
             toSQLToolStripMenuItem.Click += toSQLToolStripMenuItem_Click;
             //
@@ -556,7 +537,7 @@ namespace WDBXEditor
             //
             toSQLFileToolStripMenuItem.Image = Properties.Resources.sqlfile;
             toSQLFileToolStripMenuItem.Name = "toSQLFileToolStripMenuItem";
-            toSQLFileToolStripMenuItem.Size = new System.Drawing.Size(165, 26);
+            toSQLFileToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             toSQLFileToolStripMenuItem.Text = "To SQL File";
             toSQLFileToolStripMenuItem.Click += toSQLFileToolStripMenuItem_Click;
             //
@@ -564,23 +545,15 @@ namespace WDBXEditor
             //
             toCSVToolStripMenuItem.Image = Properties.Resources.csv;
             toCSVToolStripMenuItem.Name = "toCSVToolStripMenuItem";
-            toCSVToolStripMenuItem.Size = new System.Drawing.Size(165, 26);
+            toCSVToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             toCSVToolStripMenuItem.Text = "To CSV";
             toCSVToolStripMenuItem.Click += toCSVToolStripMenuItem_Click;
-            //
-            // toMPQToolStripMenuItem
-            //
-            toMPQToolStripMenuItem.Image = Properties.Resources.sqlfile;
-            toMPQToolStripMenuItem.Name = "toMPQToolStripMenuItem";
-            toMPQToolStripMenuItem.Size = new System.Drawing.Size(165, 26);
-            toMPQToolStripMenuItem.Text = "To MPQ";
-            toMPQToolStripMenuItem.Click += toMPQToolStripMenuItem_Click;
             //
             // toJSONToolStripMenuItem
             //
             toJSONToolStripMenuItem.Image = Properties.Resources.sqlfile;
             toJSONToolStripMenuItem.Name = "toJSONToolStripMenuItem";
-            toJSONToolStripMenuItem.Size = new System.Drawing.Size(165, 26);
+            toJSONToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             toJSONToolStripMenuItem.Text = "To JSON";
             toJSONToolStripMenuItem.Click += toJSONToolStripMenuItem_Click;
             //
@@ -595,7 +568,7 @@ namespace WDBXEditor
             //
             fromSQLToolStripMenuItem.Image = Properties.Resources.sql;
             fromSQLToolStripMenuItem.Name = "fromSQLToolStripMenuItem";
-            fromSQLToolStripMenuItem.Size = new System.Drawing.Size(156, 26);
+            fromSQLToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             fromSQLToolStripMenuItem.Text = "From SQL";
             fromSQLToolStripMenuItem.Click += fromSQLToolStripMenuItem_Click;
             //
@@ -603,7 +576,7 @@ namespace WDBXEditor
             //
             fromCSVToolStripMenuItem.Image = Properties.Resources.csv;
             fromCSVToolStripMenuItem.Name = "fromCSVToolStripMenuItem";
-            fromCSVToolStripMenuItem.Size = new System.Drawing.Size(156, 26);
+            fromCSVToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             fromCSVToolStripMenuItem.Text = "From CSV";
             fromCSVToolStripMenuItem.Click += fromCSVToolStripMenuItem_Click;
             //
@@ -618,7 +591,7 @@ namespace WDBXEditor
             //
             editDefinitionsToolStripMenuItem.Image = Properties.Resources.load_definition;
             editDefinitionsToolStripMenuItem.Name = "editDefinitionsToolStripMenuItem";
-            editDefinitionsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            editDefinitionsToolStripMenuItem.Size = new System.Drawing.Size(202, 26);
             editDefinitionsToolStripMenuItem.Text = "Definition Editor";
             editDefinitionsToolStripMenuItem.Click += editDefinitionsToolStripMenuItem_Click;
             //
@@ -627,7 +600,7 @@ namespace WDBXEditor
             colourPickerToolStripMenuItem.Enabled = false;
             colourPickerToolStripMenuItem.Image = Properties.Resources.paintbrush;
             colourPickerToolStripMenuItem.Name = "colourPickerToolStripMenuItem";
-            colourPickerToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            colourPickerToolStripMenuItem.Size = new System.Drawing.Size(202, 26);
             colourPickerToolStripMenuItem.Text = "Colour Picker";
             colourPickerToolStripMenuItem.Click += colourPickerToolStripMenuItem_Click;
             //
@@ -641,7 +614,7 @@ namespace WDBXEditor
             // aboutToolStripMenuItem
             //
             aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            aboutToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            aboutToolStripMenuItem.Size = new System.Drawing.Size(133, 26);
             aboutToolStripMenuItem.Text = "About";
             aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
             //
@@ -870,9 +843,6 @@ namespace WDBXEditor
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtStats;
-        private System.Windows.Forms.ToolStripMenuItem openFromMPQToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toMPQToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem openFromCASCToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem closeAllToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;

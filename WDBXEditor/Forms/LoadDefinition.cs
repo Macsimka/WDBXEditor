@@ -25,12 +25,6 @@ namespace WDBXEditor
             LoadBuilds();
         }
 
-        public void UpdateFiles(IEnumerable<string> files)
-        {
-            Files = Files.Concat(files);
-            LoadBuilds();
-        }
-
         #region Button Events
         private void btnLoad_Click(object sender, EventArgs e)
         {
@@ -44,15 +38,6 @@ namespace WDBXEditor
         {
             DialogResult = DialogResult.Cancel;
             Close();
-        }
-
-        private void btnNewWindow_Click(object sender, EventArgs e)
-        {
-            if (InstanceManager.LoadNewInstance(Files))
-            {
-                DialogResult = DialogResult.Cancel;
-                Close();
-            }
         }
         #endregion
 

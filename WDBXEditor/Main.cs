@@ -35,16 +35,6 @@ namespace WDBXEditor
             advancedDataGridView.DataSource = _bindingsource;
         }
 
-        public Main(string[] filenames)
-        {
-            InitializeComponent();
-
-            _bindingsource.DataSource = null;
-            advancedDataGridView.DataSource = _bindingsource;
-
-            Parallel.For(0, filenames.Length, f => InstanceManager.AutoRun.Enqueue(filenames[f]));
-        }
-
         private void Main_Load(object sender, EventArgs e)
         {
             //Create temp directory
@@ -63,22 +53,9 @@ namespace WDBXEditor
                 {
                     // Check for Update, enable watcher after completion
                     Task.Run(UpdateManager.CheckForUpdate).ContinueWith(y => Watcher(), TaskScheduler.FromCurrentSynchronizationContext());
-
-                    // Run preloaded files
-                    AutoRun();
                 },
                 TaskScheduler.FromCurrentSynchronizationContext());
 
-
-            //Setup Single Instance Delegate
-            InstanceManager.AutoRunAdded += delegate
-            {
-                Invoke((MethodInvoker)delegate
-                {
-                    InstanceManager.FlashWindow(this);
-                    AutoRun();
-                });
-            };
 
             //Load ColumnAutoSizeMode dropdown
             LoadColumnSizeDropdown();
@@ -100,7 +77,6 @@ namespace WDBXEditor
                 try { Directory.Delete(TEMP_FOLDER, true); } catch { }
 
                 ProgressBarHandle(false, "", false);
-                InstanceManager.Stop();
                 watcher.EnableRaisingEvents = false;
                 FormHandler.Close();
             }
@@ -257,11 +233,6 @@ namespace WDBXEditor
         private void advancedDataGridView_DragDrop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            foreach (string file in files)
-                if (Regex.IsMatch(file, Constants.FileRegexPattern, RegexOptions.Compiled | RegexOptions.IgnoreCase))
-                    InstanceManager.AutoRun.Enqueue(file);
-
-            AutoRun();
         }
         #endregion
 
@@ -463,67 +434,6 @@ namespace WDBXEditor
 
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
-
-        /// <summary>
-        /// Allows the user to select DB* files from an MPQ archive
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void openFromMPQToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            using var mpq = new LoadMPQ();
-            if (mpq.ShowDialog(this) == DialogResult.OK)
-            {
-                using (var loaddefs = new LoadDefinition())
-                {
-                    loaddefs.Files = mpq.Streams.Keys;
-                    if (loaddefs.ShowDialog(this) != DialogResult.OK)
-                        return;
-                }
-
-                ProgressBarHandle(true, "Loading files...");
-                Task.Run(() => Database.LoadFiles(mpq.Streams))
-                .ContinueWith(x =>
-                {
-                    if (x.Result.Count > 0)
-                        new ErrorReport(x.Result).ShowDialog(this);
-
-                    LoadFiles(mpq.Streams.Keys);
-                    ProgressBarHandle(false);
-                }, TaskScheduler.FromCurrentSynchronizationContext());
-            }
-        }
-
-        private void openFromCASCToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            using var mpq = new LoadMPQ();
-            mpq.IsMPQ = false;
-
-            if (mpq.ShowDialog(this) == DialogResult.OK)
-            {
-                using (var loaddefs = new LoadDefinition())
-                {
-                    loaddefs.Files = mpq.FileNames.Values;
-                    if (loaddefs.Files.Count() == 0)
-                        loaddefs.Files = mpq.Streams.Keys;
-
-                    if (loaddefs.ShowDialog(this) != DialogResult.OK)
-                        return;
-                }
-
-                ProgressBarHandle(true, "Loading files...");
-                Task.Run(() => Database.LoadFiles(mpq.Streams))
-                .ContinueWith(x =>
-                {
-                    if (x.Result.Count > 0)
-                        new ErrorReport(x.Result).ShowDialog(this);
-
-                    LoadFiles(mpq.Streams.Keys);
-                    ProgressBarHandle(false);
-                }, TaskScheduler.FromCurrentSynchronizationContext());
-            }
-        }
-
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!IsLoaded) return;
@@ -697,38 +607,6 @@ namespace WDBXEditor
 
                 }, TaskScheduler.FromCurrentSynchronizationContext());
             }
-        }
-
-        /// <summary>
-        /// Exports the current dataset to a MPQ file
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void toMPQToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (!IsLoaded) return;
-
-            //Get the correct save settings
-            using var sfd = new SaveFileDialog();
-            sfd.InitialDirectory = Path.GetDirectoryName(LoadedEntry.FilePath);
-            sfd.OverwritePrompt = false;
-            sfd.CheckFileExists = false;
-
-            //Set the correct filter
-            switch (Path.GetExtension(LoadedEntry.FilePath).ToLower().TrimStart('.'))
-            {
-                case "dbc":
-                case "db2":
-                    sfd.FileName = LoadedEntry.TableStructure.Name + ".mpq";
-                    sfd.Filter = "MPQ Files|*.mpq";
-                    break;
-                default:
-                    MessageBox.Show("Only DBC and DB2 files can be saved to MPQ.");
-                    return;
-            }
-
-            if (sfd.ShowDialog(this) == DialogResult.OK)
-                LoadedEntry.ToMPQ(sfd.FileName);
         }
 
         /// <summary>
@@ -1301,46 +1179,6 @@ namespace WDBXEditor
             gbFilter.Enabled = !start;
             advancedDataGridView.ReadOnly = start;
             advancedDataGridView.Refresh();
-        }
-
-        private void AutoRun()
-        {
-            if (InstanceManager.AutoRun.Any(x => File.Exists(x)))
-            {
-                //Dequeue all stored files
-                IEnumerable<string> filenames = InstanceManager.GetFilesToOpen();
-
-                //See if we can use an existing LoadDefinition
-                var loaddef = FormHandler.GetForm<LoadDefinition>();
-                if (loaddef != null)
-                {
-                    loaddef.UpdateFiles(filenames);
-                    return;
-                }
-
-                //Load definition picker
-                using (var loaddefs = new LoadDefinition())
-                {
-                    loaddefs.Files = filenames;
-                    if (loaddefs.ShowDialog(this) != DialogResult.OK)
-                        return;
-                    else
-                        filenames = loaddefs.Files;
-                }
-
-                //Load the files
-                ProgressBarHandle(true, "Loading files...");
-                Task.Run(() => Database.LoadFiles(filenames))
-                .ContinueWith(x =>
-                {
-                    if (x.Result.Count > 0)
-                        new ErrorReport(x.Result).ShowDialog(this);
-
-                    LoadFiles(filenames);
-                    ProgressBarHandle(false);
-
-                }, TaskScheduler.FromCurrentSynchronizationContext());
-            }
         }
 
         private void Watcher()

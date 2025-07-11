@@ -30,116 +30,110 @@ namespace WDBXEditor
         /// </summary>
         private void InitializeComponent()
         {
-			this.components = new System.ComponentModel.Container();
-			this.btnClose = new System.Windows.Forms.Button();
-			this.btnLoad = new System.Windows.Forms.Button();
-			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-			this.label3 = new System.Windows.Forms.Label();
-			this.btnNewWindow = new System.Windows.Forms.Button();
-			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-			this.lblFiles = new System.Windows.Forms.Label();
-			this.chkBuildFilter = new System.Windows.Forms.CheckBox();
-			this.lbDefinitions = new WDBXEditor.Common.BufferedListBox();
-			this.SuspendLayout();
-			// 
-			// btnClose
-			// 
-			this.btnClose.Location = new System.Drawing.Point(202, 233);
-			this.btnClose.Name = "btnClose";
-			this.btnClose.Size = new System.Drawing.Size(75, 23);
-			this.btnClose.TabIndex = 2;
-			this.btnClose.Text = "Close";
-			this.btnClose.UseVisualStyleBackColor = true;
-			this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-			// 
-			// btnLoad
-			// 
-			this.btnLoad.Location = new System.Drawing.Point(121, 233);
-			this.btnLoad.Name = "btnLoad";
-			this.btnLoad.Size = new System.Drawing.Size(75, 23);
-			this.btnLoad.TabIndex = 1;
-			this.btnLoad.Text = "Load";
-			this.btnLoad.UseVisualStyleBackColor = true;
-			this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
-			// 
-			// openFileDialog
-			// 
-			this.openFileDialog.Filter = "XML Files|*.xml";
-			// 
-			// label3
-			// 
-			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(9, 9);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(193, 13);
-			this.label3.TabIndex = 11;
-			this.label3.Text = "Builds will be limited to available options";
-			// 
-			// btnNewWindow
-			// 
-			this.btnNewWindow.Image = global::WDBXEditor.Properties.Resources.open_new;
-			this.btnNewWindow.Location = new System.Drawing.Point(12, 233);
-			this.btnNewWindow.Name = "btnNewWindow";
-			this.btnNewWindow.Size = new System.Drawing.Size(29, 23);
-			this.btnNewWindow.TabIndex = 12;
-			this.toolTip1.SetToolTip(this.btnNewWindow, "Opens in a new instance of the program");
-			this.btnNewWindow.UseVisualStyleBackColor = true;
-			this.btnNewWindow.Click += new System.EventHandler(this.btnNewWindow_Click);
-			// 
-			// lblFiles
-			// 
-			this.lblFiles.Location = new System.Drawing.Point(212, 9);
-			this.lblFiles.Name = "lblFiles";
-			this.lblFiles.Size = new System.Drawing.Size(64, 13);
-			this.lblFiles.TabIndex = 13;
-			this.lblFiles.Text = "0 Files";
-			this.lblFiles.TextAlign = System.Drawing.ContentAlignment.TopRight;
-			// 
-			// chkBuildFilter
-			// 
-			this.chkBuildFilter.AutoSize = true;
-			this.chkBuildFilter.Location = new System.Drawing.Point(47, 237);
-			this.chkBuildFilter.Name = "chkBuildFilter";
-			this.chkBuildFilter.Size = new System.Drawing.Size(68, 17);
-			this.chkBuildFilter.TabIndex = 14;
-			this.chkBuildFilter.Text = "All Builds";
-			this.chkBuildFilter.UseVisualStyleBackColor = true;
-			this.chkBuildFilter.CheckedChanged += new System.EventHandler(this.chkBuildFilter_CheckedChanged);
-			// 
-			// lbDefinitions
-			// 
-			this.lbDefinitions.FormattingEnabled = true;
-			this.lbDefinitions.Location = new System.Drawing.Point(12, 28);
-			this.lbDefinitions.Name = "lbDefinitions";
-			this.lbDefinitions.Size = new System.Drawing.Size(265, 199);
-			this.lbDefinitions.TabIndex = 0;
-			this.lbDefinitions.SelectedValueChanged += new System.EventHandler(this.lbDefinitions_SelectedValueChanged);
-			this.lbDefinitions.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lbDefinitions_MouseDoubleClick);
-			// 
-			// LoadDefinition
-			// 
-			this.AcceptButton = this.btnLoad;
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(290, 261);
-			this.Controls.Add(this.chkBuildFilter);
-			this.Controls.Add(this.lblFiles);
-			this.Controls.Add(this.btnNewWindow);
-			this.Controls.Add(this.label3);
-			this.Controls.Add(this.btnLoad);
-			this.Controls.Add(this.btnClose);
-			this.Controls.Add(this.lbDefinitions);
-			this.MaximizeBox = false;
-			this.MaximumSize = new System.Drawing.Size(306, 300);
-			this.MinimizeBox = false;
-			this.MinimumSize = new System.Drawing.Size(306, 300);
-			this.Name = "LoadDefinition";
-			this.ShowIcon = false;
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-			this.Text = "Load Definition";
-			this.Load += new System.EventHandler(this.LoadDefinition_Load);
-			this.ResumeLayout(false);
-			this.PerformLayout();
+            components = new System.ComponentModel.Container();
+            btnClose = new System.Windows.Forms.Button();
+            btnLoad = new System.Windows.Forms.Button();
+            openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            label3 = new System.Windows.Forms.Label();
+            toolTip1 = new System.Windows.Forms.ToolTip(components);
+            lblFiles = new System.Windows.Forms.Label();
+            chkBuildFilter = new System.Windows.Forms.CheckBox();
+            lbDefinitions = new BufferedListBox();
+            SuspendLayout();
+            //
+            // btnClose
+            //
+            btnClose.Location = new System.Drawing.Point(269, 358);
+            btnClose.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            btnClose.Name = "btnClose";
+            btnClose.Size = new System.Drawing.Size(100, 35);
+            btnClose.TabIndex = 2;
+            btnClose.Text = "Close";
+            btnClose.UseVisualStyleBackColor = true;
+            btnClose.Click += btnClose_Click;
+            //
+            // btnLoad
+            //
+            btnLoad.Location = new System.Drawing.Point(161, 358);
+            btnLoad.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            btnLoad.Name = "btnLoad";
+            btnLoad.Size = new System.Drawing.Size(100, 35);
+            btnLoad.TabIndex = 1;
+            btnLoad.Text = "Load";
+            btnLoad.UseVisualStyleBackColor = true;
+            btnLoad.Click += btnLoad_Click;
+            //
+            // openFileDialog
+            //
+            openFileDialog.Filter = "XML Files|*.xml";
+            //
+            // label3
+            //
+            label3.AutoSize = true;
+            label3.Location = new System.Drawing.Point(12, 14);
+            label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label3.Name = "label3";
+            label3.Size = new System.Drawing.Size(284, 20);
+            label3.TabIndex = 11;
+            label3.Text = "Builds will be limited to available options";
+            //
+            // lblFiles
+            //
+            lblFiles.Location = new System.Drawing.Point(283, 14);
+            lblFiles.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblFiles.Name = "lblFiles";
+            lblFiles.Size = new System.Drawing.Size(85, 20);
+            lblFiles.TabIndex = 13;
+            lblFiles.Text = "0 Files";
+            lblFiles.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            //
+            // chkBuildFilter
+            //
+            chkBuildFilter.AutoSize = true;
+            chkBuildFilter.Location = new System.Drawing.Point(63, 365);
+            chkBuildFilter.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            chkBuildFilter.Name = "chkBuildFilter";
+            chkBuildFilter.Size = new System.Drawing.Size(93, 24);
+            chkBuildFilter.TabIndex = 14;
+            chkBuildFilter.Text = "All Builds";
+            chkBuildFilter.UseVisualStyleBackColor = true;
+            chkBuildFilter.CheckedChanged += chkBuildFilter_CheckedChanged;
+            //
+            // lbDefinitions
+            //
+            lbDefinitions.FormattingEnabled = true;
+            lbDefinitions.Location = new System.Drawing.Point(16, 43);
+            lbDefinitions.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            lbDefinitions.Name = "lbDefinitions";
+            lbDefinitions.Size = new System.Drawing.Size(352, 304);
+            lbDefinitions.TabIndex = 0;
+            lbDefinitions.SelectedValueChanged += lbDefinitions_SelectedValueChanged;
+            lbDefinitions.MouseDoubleClick += lbDefinitions_MouseDoubleClick;
+            //
+            // LoadDefinition
+            //
+            AcceptButton = btnLoad;
+            AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            ClientSize = new System.Drawing.Size(384, 389);
+            Controls.Add(chkBuildFilter);
+            Controls.Add(lblFiles);
+            Controls.Add(label3);
+            Controls.Add(btnLoad);
+            Controls.Add(btnClose);
+            Controls.Add(lbDefinitions);
+            Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            MaximizeBox = false;
+            MaximumSize = new System.Drawing.Size(402, 436);
+            MinimizeBox = false;
+            MinimumSize = new System.Drawing.Size(402, 436);
+            Name = "LoadDefinition";
+            ShowIcon = false;
+            StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            Text = "Load Definition";
+            Load += LoadDefinition_Load;
+            ResumeLayout(false);
+            PerformLayout();
 
         }
 
@@ -150,7 +144,6 @@ namespace WDBXEditor
         private System.Windows.Forms.Button btnLoad;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button btnNewWindow;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Label lblFiles;
 		private System.Windows.Forms.CheckBox chkBuildFilter;

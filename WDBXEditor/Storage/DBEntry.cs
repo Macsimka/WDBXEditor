@@ -10,13 +10,11 @@ using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WDBXEditor.Archives.MPQ;
 using WDBXEditor.Common;
 using WDBXEditor.Reader;
 using WDBXEditor.Reader.FileTypes;
 using static WDBXEditor.Common.Constants;
 using static WDBXEditor.Common.Extensions;
-using static WDBXEditor.Forms.InputBox;
 
 namespace WDBXEditor.Storage
 {
@@ -546,63 +544,6 @@ namespace WDBXEditor.Storage
             }
 
             return sb.ToString();
-        }
-
-        /// <summary>
-        /// Appends to or creates a MPQ file
-        /// <para>Picks the appropiate version based on the build number.</para>
-        /// </summary>
-        /// <param name="filename"></param>
-        /// <param name="version"></param>
-        public void ToMPQ(string filename)
-        {
-            MpqArchiveVersion version = MpqArchiveVersion.Version2;
-            if (Build <= (int)ExpansionFinalBuild.WotLK)
-                version = MpqArchiveVersion.Version2;
-            else if (Build <= (int)ExpansionFinalBuild.MoP)
-                version = MpqArchiveVersion.Version4;
-            else
-            {
-                MessageBox.Show("Only clients before WoD support MPQ archives.");
-                return;
-            }
-
-            try
-            {
-                MpqArchive archive = null;
-                if (File.Exists(filename))
-                {
-                    switch (ShowOverwriteDialog("You've selected an existing MPQ archive.\r\nWhich action would you like to take?", "Existing MPQ"))
-                    {
-                        case DialogResult.Yes: //Append
-                            archive = new MpqArchive(filename, FileAccess.Write);
-                            break;
-                        case DialogResult.No: //Overwrite
-                            archive = MpqArchive.CreateNew(filename, version);
-                            break;
-                        default:
-                            return;
-                    }
-                }
-                else
-                    archive = MpqArchive.CreateNew(filename, version);
-
-                string tmpPath = Path.Combine(TEMP_FOLDER, TableStructure.Name);
-                string fileName = Path.GetFileName(FilePath);
-                string filePath = Path.Combine("DBFilesClient", fileName);
-
-                new DBReader().Write(this, tmpPath);
-                archive.AddFileFromDisk(tmpPath, filePath);
-
-                int retval = archive.AddListFile(filePath);
-                archive.Compact(filePath);
-                archive.Flush();
-                archive.Dispose();
-            } //Save the file
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error exporting to MPQ archive {ex.Message}");
-            }
         }
 
         /// <summary>

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using WDBXEditor.ConsoleHandler;
 
 namespace WDBXEditor
 {
@@ -12,31 +11,14 @@ namespace WDBXEditor
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        private static void Main(string[] args)
+        private static void Main()
         {
-            InstanceManager.InstanceCheck(args); //Check to see if we can run this instance
-            InstanceManager.LoadDll("StormLib.dll"); //Loads the correct StormLib library
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
             UpdateManager.Clean();
 
-            if (args != null && args.Length > 0)
-            {
-                ConsoleManager.LoadCommandDefinitions();
-
-                if (ConsoleManager.CommandHandlers.ContainsKey(args[0].ToLower()))
-                    ConsoleManager.ConsoleMain(args); //Console mode
-                else
-                    Application.Run(new Main(args)); //Load file(s)
-            }
-            else
-            {
-                Application.Run(new Main()); //Default
-            }
-
-            InstanceManager.Stop();
+            Application.Run(new Main());
         }
     }
 }
