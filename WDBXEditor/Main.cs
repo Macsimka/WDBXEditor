@@ -48,14 +48,7 @@ namespace WDBXEditor
             Parallel.ForEach(Controls.Cast<Control>(), c => c.KeyDown += new KeyEventHandler(KeyDownEvent));
 
             //Load definitions + Start FileWatcher
-            Task.Run(Database.LoadDefinitions)
-                .ContinueWith(x =>
-                {
-                    // Check for Update, enable watcher after completion
-                    Task.Run(UpdateManager.CheckForUpdate).ContinueWith(y => Watcher(), TaskScheduler.FromCurrentSynchronizationContext());
-                },
-                TaskScheduler.FromCurrentSynchronizationContext());
-
+            Task.Run(Database.LoadDefinitions).ContinueWith(_ => { Watcher(); }, TaskScheduler.FromCurrentSynchronizationContext());
 
             //Load ColumnAutoSizeMode dropdown
             LoadColumnSizeDropdown();
@@ -1190,7 +1183,8 @@ namespace WDBXEditor
                 Filter = "*.xml",
                 EnableRaisingEvents = true
             };
-            watcher.Changed += delegate { Task.Run(() => Database.LoadDefinitions()); };
+
+            watcher.Changed += delegate { Task.Run(Database.LoadDefinitions); };
         }
 
         private void LoadRecentList()

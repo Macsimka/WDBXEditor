@@ -5,8 +5,6 @@ namespace WDBXEditor
 {
     internal static class Program
     {
-        public static bool PrimaryInstance = false;
-
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -15,8 +13,6 @@ namespace WDBXEditor
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-            UpdateManager.Clean();
 
             Application.Run(new Main());
         }
