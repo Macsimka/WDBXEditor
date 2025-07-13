@@ -25,6 +25,12 @@ namespace WDBXEditor
             LoadBuilds();
         }
 
+        public void UpdateFiles(IEnumerable<string> files)
+        {
+            Files = Files.Concat(files);
+            LoadBuilds();
+        }
+
         #region Button Events
         private void btnLoad_Click(object sender, EventArgs e)
         {

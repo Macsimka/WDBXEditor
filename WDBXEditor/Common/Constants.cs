@@ -317,6 +317,8 @@ namespace WDBXEditor.Common
         #endregion
 
         #region File Types
+        public static string FileRegexPattern => $"^(.{SupportedFileTypes["All Files"].Replace(";*.", "|.*.")})$";
+
         public static readonly Dictionary<string, string> SupportedFileTypes = new()
         {
             {"All Files", "*.dbc;*.db2;*.adb;*.wdb;DBCache.bin" },

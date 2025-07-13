@@ -226,6 +226,11 @@ namespace WDBXEditor
         private void advancedDataGridView_DragDrop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            foreach (string file in files)
+                if (Regex.IsMatch(file, Constants.FileRegexPattern, RegexOptions.Compiled | RegexOptions.IgnoreCase))
+                    InstanceManager.AutoRun.Enqueue(file);
+
+            AutoRun();
         }
         #endregion
 
@@ -1172,6 +1177,46 @@ namespace WDBXEditor
             gbFilter.Enabled = !start;
             advancedDataGridView.ReadOnly = start;
             advancedDataGridView.Refresh();
+        }
+
+        private void AutoRun()
+        {
+            if (!InstanceManager.AutoRun.IsEmpty)
+            {
+                //Dequeue all stored files
+                IEnumerable<string> filenames = InstanceManager.GetFilesToOpen();
+
+                //See if we can use an existing LoadDefinition
+                var loaddef = FormHandler.GetForm<LoadDefinition>();
+                if (loaddef != null)
+                {
+                    loaddef.UpdateFiles(filenames);
+                    return;
+                }
+
+                //Load definition picker
+                using (var loaddefs = new LoadDefinition())
+                {
+                    loaddefs.Files = filenames;
+                    if (loaddefs.ShowDialog(this) != DialogResult.OK)
+                        return;
+                    else
+                        filenames = loaddefs.Files;
+                }
+
+                //Load the files
+                ProgressBarHandle(true, "Loading files...");
+                Task.Run(() => Database.LoadFiles(filenames))
+                    .ContinueWith(x =>
+                    {
+                        if (x.Result.Count > 0)
+                            new ErrorReport(x.Result).ShowDialog(this);
+
+                        LoadFiles(filenames);
+                        ProgressBarHandle(false);
+
+                    }, TaskScheduler.FromCurrentSynchronizationContext());
+            }
         }
 
         private void Watcher()
