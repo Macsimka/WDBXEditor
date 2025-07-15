@@ -1906,6 +1906,10 @@
     <Field Name="UniqueBit" Type="uint" />
     <Field Name="TradeSkillCategoryID" Type="uint" />
   </Table>
+  <Table Name="SkillLineAbilitySortedSpell" Build="18414">
+    <Field Name="ID" Type="int" IsIndex="true" />
+    <Field Name="Spell" Type="int" />
+  </Table>
   <Table Name="SoundAmbience" Build="18414">
     <Field Name="ID" Type="uint" IsIndex="true" />
     <Field Name="AmbienceID" Type="uint" ArraySize="2" />
@@ -2465,6 +2469,14 @@
     <Field Name="ItemID" Type="uint" />
     <Field Name="SourceTypeEnum" Type="int" />
     <Field Name="SourceTextLang" Type="string" />
+    <Field Name="Flags" Type="int" />
+  </Table>
+  <Table Name="TradeSkillCategory" Build="18414">
+    <Field Name="ID" Type="int" IsIndex="true" />
+    <Field Name="SkillLineID" Type="int" />
+    <Field Name="ParentTradeSkillCategoryID" Type="int" />
+    <Field Name="OrderIndex" Type="int" />
+    <Field Name="Name_Lang" Type="string" />
     <Field Name="Flags" Type="int" />
   </Table>
   <Table Name="TransmogHoliday" Build="18414">
