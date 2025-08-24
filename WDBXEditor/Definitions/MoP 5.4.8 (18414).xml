@@ -1562,7 +1562,7 @@
   </Table>
   <Table Name="ItemNameDescription" Build="18414">
     <Field Name="ID" Type="uint" IsIndex="true" />
-    <Field Name="DescriptionLang" Type="uint" />
+    <Field Name="DescriptionLang" Type="string" />
     <Field Name="Color" Type="uint" />
   </Table>
   <Table Name="ItemNameDescriptionTransmog" Build="18414">
@@ -2372,7 +2372,7 @@
   </Table>
   <Table Name="QuestInfo" Build="18414">
     <Field Name="ID" Type="uint" IsIndex="true" />
-    <Field Name="InfoName_lang" Type="string" />
+    <Field Name="InfoNameLang" Type="string" />
   </Table>
   <Table Name="QuestMoneyReward" Build="18414">
     <Field Name="ID" Type="uint" IsIndex="true" />
