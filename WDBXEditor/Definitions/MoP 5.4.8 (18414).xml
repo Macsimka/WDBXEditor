@@ -1279,7 +1279,7 @@
   </Table>
   <Table Name="HelmetGeosetVisData" Build="18414">
     <Field Name="ID" Type="uint" IsIndex="true" />
-    <Field Name="HideGeoset" Type="int" ArraySize="7" />
+    <Field Name="HideGeoset" Type="uint" ArraySize="7" />
   </Table>
   <Table Name="HolidayDescriptions" Build="18414">
     <Field Name="ID" Type="uint" IsIndex="true" />
