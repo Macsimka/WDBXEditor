@@ -2332,7 +2332,7 @@
     <Field Name="MaxAvgEquippedItemLevel" Type="uint" />
     <Field Name="ChrSpecializationIndex" Type="int" />
     <Field Name="ChrSpecializationRole" Type="int" />
-    <Field Name="FailureDescriptionLang" Type="uint" />
+    <Field Name="FailureDescriptionLang" Type="string" />
     <Field Name="PowerType" Type="int" />
     <Field Name="PowerTypeComp" Type="uint" />
     <Field Name="PowerTypeValue" Type="uint" />
