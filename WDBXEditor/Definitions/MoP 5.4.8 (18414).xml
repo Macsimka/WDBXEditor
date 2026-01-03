@@ -132,7 +132,7 @@
     <Field Name="Pos" Type="float" ArraySize="2" />
     <Field Name="ContinentID" Type="uint" />
     <Field Name="Flags" Type="uint" />
-    <Field Name="AreaID" Type="uint" />
+    <Field Name="AreaID" Type="int" />
     <Field Name="NameLang" Type="string" />
     <Field Name="DescriptionLang" Type="string" />
     <Field Name="WorldStateID" Type="uint" />
@@ -1921,8 +1921,8 @@
   </Table>
   <Table Name="LiquidMaterial" Build="18414">
     <Field Name="ID" Type="uint" IsIndex="true" />
-    <Field Name="Flags" Type="uint" />
     <Field Name="LVF" Type="uint" />
+    <Field Name="Flags" Type="uint" />
   </Table>
   <Table Name="LiquidObject" Build="18414">
     <Field Name="ID" Type="uint" IsIndex="true" />
